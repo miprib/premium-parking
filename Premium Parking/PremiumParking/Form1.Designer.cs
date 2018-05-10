@@ -35,13 +35,16 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.backButton = new System.Windows.Forms.Button();
+            this.infoBox = new System.Windows.Forms.ListBox();
             this.consoleTab.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
@@ -51,13 +54,13 @@
             this.menu.FormattingEnabled = true;
             this.menu.ItemHeight = 16;
             this.menu.Items.AddRange(new object[] {
-            "Atidaryti vartus",
-            "Uzdaryti vartus",
-            "Perziureti ivaziavimo/isvaziavimo zurnala",
-            "Prideti rezervuota vieta",
-            "Pasalinti rezervuota vieta",
-            "Anuliuoti valstybini numeri",
-            "Pakeisti neigaliuju vietu skaiciu"});
+            "Vartų kontrolė",
+            "Peržiūrėti informaciją",
+            "Rezervacijos",
+            "Keisti stovėjimo kainą",
+            "Archyvavimas",
+            "Dashboard kontrolė",
+            "Lempučių ryškumas"});
             this.menu.Location = new System.Drawing.Point(12, 12);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(276, 116);
@@ -91,6 +94,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.infoBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -129,6 +133,12 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(131, 59);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 0;
             // 
             // tabPage4
             // 
@@ -180,23 +190,38 @@
             this.tabPage8.Text = "tabPage8";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // monthCalendar1
+            // backButton
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(131, 59);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 0;
+            this.backButton.Location = new System.Drawing.Point(308, 491);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(75, 23);
+            this.backButton.TabIndex = 3;
+            this.backButton.Text = "Back";
+            this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
+            // 
+            // infoBox
+            // 
+            this.infoBox.FormattingEnabled = true;
+            this.infoBox.ItemHeight = 16;
+            this.infoBox.Location = new System.Drawing.Point(7, 7);
+            this.infoBox.Name = "infoBox";
+            this.infoBox.Size = new System.Drawing.Size(558, 436);
+            this.infoBox.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 501);
+            this.ClientSize = new System.Drawing.Size(895, 520);
+            this.Controls.Add(this.backButton);
             this.Controls.Add(this.consoleTab);
             this.Controls.Add(this.console);
             this.Controls.Add(this.menu);
             this.Name = "Form1";
             this.Text = "Form1";
             this.consoleTab.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -218,6 +243,8 @@
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.Button backButton;
+        private System.Windows.Forms.ListBox infoBox;
     }
 }
 
