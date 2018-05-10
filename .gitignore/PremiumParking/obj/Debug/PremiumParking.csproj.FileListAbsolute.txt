@@ -1,0 +1,10 @@
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\bin\Debug\PremiumParking.exe.config
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\bin\Debug\PremiumParking.exe
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\bin\Debug\PremiumParking.pdb
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.csprojResolveAssemblyReference.cache
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.Form1.resources
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.Properties.Resources.resources
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.csproj.GenerateResource.cache
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.csproj.CoreCompileInputs.cache
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.exe
+C:\Users\Mikas\source\repos\PremiumParking\PremiumParking\obj\Debug\PremiumParking.pdb
