@@ -39,7 +39,7 @@
             this.popupList.Name = "popupList";
             this.popupList.Size = new System.Drawing.Size(496, 276);
             this.popupList.TabIndex = 0;
-            this.popupList.SelectedIndexChanged += new System.EventHandler(this.popupList_SelectedIndexChanged);
+            this.popupList.DoubleClick += new System.EventHandler(this.popupList_SelectedIndexChanged);
             // 
             // Popup
             // 

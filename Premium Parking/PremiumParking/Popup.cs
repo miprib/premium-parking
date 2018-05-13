@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PremiumParking
@@ -13,10 +7,8 @@ namespace PremiumParking
     public partial class Popup : Form
     {
         public int PopupReturn { get; set; }
-        public Boolean First { get; set; }
         public Popup(int n)
         {
-            First = true;
             List<String> selections = new List<string>();
             InitializeComponent();
             switch (n)
@@ -49,13 +41,8 @@ namespace PremiumParking
         private void popupList_SelectedIndexChanged(object sender, EventArgs e)
         {
             PopupReturn = popupList.SelectedIndex;
-            this.DialogResult = DialogResult.OK;
-            if (First)
-            {
-                First = !First;
-                return;
-            }
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

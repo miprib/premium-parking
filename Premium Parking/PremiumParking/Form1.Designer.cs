@@ -68,7 +68,7 @@ namespace PremiumParking
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(276, 116);
             this.menu.TabIndex = 0;
-            this.menu.SelectedIndexChanged += new System.EventHandler(this.menu_SelectedIndexChanged);
+            this.menu.DoubleClick += new System.EventHandler(this.menu_SelectedIndexChanged);
             // 
             // console
             // 

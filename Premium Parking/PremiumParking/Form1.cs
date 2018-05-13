@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using PremiumParking.DataModels;
 
@@ -67,16 +65,14 @@ namespace PremiumParking
                     break;
                 case 1:
                     popupNumber = 1;
-                    consoleTab.SelectedIndex = 2;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 2:
                     popupNumber = 2;
-                    consoleTab.SelectedIndex = 3;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 3:
-                    consoleTab.SelectedIndex = 4;
+                    consoleTab.SelectedIndex = 0;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 4:
@@ -85,15 +81,15 @@ namespace PremiumParking
                     break;
                 case 5:
                     popupNumber = 3;
-                    consoleTab.SelectedIndex = 6;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 6:
-                    consoleTab.SelectedIndex = 7;
+                    consoleTab.SelectedIndex = 0;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 default:
-                    Console.WriteLine("You fucked up... Somehow...");
+                    consoleTab.SelectedIndex = 0;
+                    Console.WriteLine(@"You fucked up... Somehow...");
                     break;
             }
 
@@ -101,10 +97,9 @@ namespace PremiumParking
 
             using(var popupUi = new Popup(popupNumber))
             {
-                var result = popupUi.ShowDialog();
-                if (result != DialogResult.OK) return;
-                var resultReturned = popupUi.PopupReturn;
-                console.Items.Add(resultReturned);
+                if (popupUi.ShowDialog() != DialogResult.OK) return;
+                consoleTab.SelectedIndex = popupUi.PopupReturn;
+                console.Items.Add(popupUi.PopupReturn);
             }
         }
 
