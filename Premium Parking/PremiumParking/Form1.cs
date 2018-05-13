@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using PremiumParking.DataModels;
 
 namespace PremiumParking
 {
     public partial class Form1 : Form
     {
+        private BindingList<string> _infoBoxItemsList;
+        private BindingList<Vehicle> _vehicles;
+        private BindingSource _gates;
+        private System.Threading.Timer _timer;
 
         public Form1()
         {
@@ -19,9 +21,45 @@ namespace PremiumParking
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
             consoleTab.SizeMode = TabSizeMode.Fixed;
+            StartSystem();
         }
 
+        private void StartSystem()
+        {
+            LoadGates();
+            StartTimerForConsoleLog();
+            LoadInOut();
+        }
 
+        private void LoadInOut()
+        {
+            _vehicles = Vehicle.MakeMany();
+            inout_jornal.AutoGenerateColumns = true;
+            inout_jornal.DataSource = _vehicles;
+        }
+
+        private void LoadGates()
+        {
+            var gates = new List<Gate> { new Gate(555), new Gate(5555), new Gate(444) };
+            _gates = new BindingSource {DataSource = gates};
+            gatesList.DataSource = _gates;
+        }
+
+        private void StartTimerForConsoleLog()
+        {
+            _infoBoxItemsList = new BindingList<string>(){"New list!"};
+            infoBox.DataSource = _infoBoxItemsList;
+            _timer = new System.Threading.Timer(o =>
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    _infoBoxItemsList.Add("New message!");
+                    infoBox.TopIndex =
+                        Math.Max(infoBox.Items.Count - infoBox.ClientSize.Height / infoBox.ItemHeight + 1, 0);
+                });
+            });
+            _timer.Change(5000, 5000);
+        }
 
         private void menu_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -29,6 +67,7 @@ namespace PremiumParking
             console.Items.Add(menu.SelectedItem.ToString());
             int visibleItems = console.ClientSize.Height / console.ItemHeight;
             console.TopIndex = Math.Max(console.Items.Count - visibleItems + 1, 0);
+            int popupNumber = -1;
 
             switch (menu.SelectedIndex)
             {
@@ -37,15 +76,15 @@ namespace PremiumParking
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 1:
-                    consoleTab.SelectedIndex = 2;
+                    popupNumber = 1;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 2:
-                    consoleTab.SelectedIndex = 3;
+                    popupNumber = 2;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 3:
-                    consoleTab.SelectedIndex = 4;
+                    consoleTab.SelectedIndex = 0;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 4:
@@ -53,18 +92,61 @@ namespace PremiumParking
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 5:
-                    consoleTab.SelectedIndex = 6;
+                    popupNumber = 3;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 6:
-                    consoleTab.SelectedIndex = 7;
+                    consoleTab.SelectedIndex = 0;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 default:
-                    Console.WriteLine("You fucked up... Somehow...");
+                    consoleTab.SelectedIndex = 0;
+                    Console.WriteLine(@"You fucked up... Somehow...");
                     break;
+            }
+
+            if (popupNumber == (-1)) return;
+
+            using(var popupUi = new Popup(popupNumber))
+            {
+                if (popupUi.ShowDialog() != DialogResult.OK) return;
+                consoleTab.SelectedIndex = popupUi.PopupReturn;
+                console.Items.Add(popupUi.PopupReturn);
             }
         }
 
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            consoleTab.SelectedIndex = 0;
+        }
+
+        private void gatesList_DoubleClick(object sender, EventArgs e)
+        {
+            var item = gatesList.SelectedItem as Gate;
+            item?.Change();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string t = textBox1.Text;
+            if (t.Length > 1)
+            {
+                BindingList<Vehicle> vehicles = new BindingList<Vehicle>();
+                foreach (var vehicle in _vehicles)
+                {
+                    if (Regex.IsMatch(vehicle.LicensePlate, t))
+                    {
+                        Console.WriteLine(vehicle.LicensePlate);
+                        vehicles.Add(vehicle);
+                    }
+                }
+                inout_jornal.DataSource = vehicles;
+            }
+            else
+            {
+                inout_jornal.DataSource = _vehicles;
+            }
+
+        }
     }
 }
