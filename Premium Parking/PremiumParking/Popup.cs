@@ -40,7 +40,24 @@ namespace PremiumParking
 
         private void popupList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PopupReturn = popupList.SelectedIndex;
+            switch (popupList.SelectedItem)
+            {
+                case "Įvažiavimų/Išvažiavimų žurnalas":
+                    PopupReturn = 2;
+                    break;
+                case "Pridėti rezervuotą vietą":
+                    PopupReturn = 3;
+                    break;
+                case "Pašalinti rezervuotą vietą":
+                    PopupReturn = 4;
+                    break;
+                case "Pakeisti laisvų vietų skaičių":
+                    PopupReturn = 6;
+                    break;
+                default:
+                    PopupReturn = 0;
+                    break;
+            }
             DialogResult = DialogResult.OK;
             Close();
         }

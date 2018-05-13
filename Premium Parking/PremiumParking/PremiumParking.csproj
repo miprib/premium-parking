@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModels\Gate.cs" />
+    <Compile Include="DataModels\Vehicle.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

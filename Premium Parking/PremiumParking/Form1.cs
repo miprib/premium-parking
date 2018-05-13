@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PremiumParking.DataModels;
 
@@ -10,6 +11,7 @@ namespace PremiumParking
     public partial class Form1 : Form
     {
         private BindingList<string> _infoBoxItemsList;
+        private BindingList<Vehicle> _vehicles;
         private BindingSource _gates;
         private System.Threading.Timer _timer;
 
@@ -26,6 +28,14 @@ namespace PremiumParking
         {
             LoadGates();
             StartTimerForConsoleLog();
+            LoadInOut();
+        }
+
+        private void LoadInOut()
+        {
+            _vehicles = Vehicle.MakeMany();
+            inout_jornal.AutoGenerateColumns = true;
+            inout_jornal.DataSource = _vehicles;
         }
 
         private void LoadGates()
@@ -44,6 +54,8 @@ namespace PremiumParking
                 Invoke((MethodInvoker)delegate
                 {
                     _infoBoxItemsList.Add("New message!");
+                    infoBox.TopIndex =
+                        Math.Max(infoBox.Items.Count - infoBox.ClientSize.Height / infoBox.ItemHeight + 1, 0);
                 });
             });
             _timer.Change(5000, 5000);
@@ -112,6 +124,29 @@ namespace PremiumParking
         {
             var item = gatesList.SelectedItem as Gate;
             item?.Change();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string t = textBox1.Text;
+            if (t.Length > 1)
+            {
+                BindingList<Vehicle> vehicles = new BindingList<Vehicle>();
+                foreach (var vehicle in _vehicles)
+                {
+                    if (Regex.IsMatch(vehicle.LicensePlate, t))
+                    {
+                        Console.WriteLine(vehicle.LicensePlate);
+                        vehicles.Add(vehicle);
+                    }
+                }
+                inout_jornal.DataSource = vehicles;
+            }
+            else
+            {
+                inout_jornal.DataSource = _vehicles;
+            }
+
         }
     }
 }

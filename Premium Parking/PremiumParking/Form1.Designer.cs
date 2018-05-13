@@ -39,17 +39,21 @@ namespace PremiumParking
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gatesList = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.backButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.inout_jornal = new System.Windows.Forms.DataGridView();
             this.consoleTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inout_jornal)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -138,7 +142,10 @@ namespace PremiumParking
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.monthCalendar1);
+            this.tabPage3.Controls.Add(this.inout_jornal);
+            this.tabPage3.Controls.Add(this.label1);
+            this.tabPage3.Controls.Add(this.textBox1);
+            this.tabPage3.Controls.Add(this.button1);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -146,12 +153,6 @@ namespace PremiumParking
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(131, 59);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 0;
             // 
             // tabPage4
             // 
@@ -213,6 +214,46 @@ namespace PremiumParking
             this.backButton.UseVisualStyleBackColor = true;
             this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(247, 416);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Filtruoti";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(141, 417);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 22);
+            this.textBox1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 420);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(129, 17);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Valstybinis numeris";
+            // 
+            // inout_jornal
+            // 
+            this.inout_jornal.AllowUserToResizeColumns = false;
+            this.inout_jornal.AllowUserToResizeRows = false;
+            this.inout_jornal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.inout_jornal.Location = new System.Drawing.Point(9, 7);
+            this.inout_jornal.MultiSelect = false;
+            this.inout_jornal.Name = "inout_jornal";
+            this.inout_jornal.ReadOnly = true;
+            this.inout_jornal.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.inout_jornal.RowTemplate.Height = 24;
+            this.inout_jornal.Size = new System.Drawing.Size(556, 403);
+            this.inout_jornal.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -228,6 +269,8 @@ namespace PremiumParking
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inout_jornal)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -245,10 +288,13 @@ namespace PremiumParking
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.ListBox infoBox;
         private ListBox gatesList;
+        private TextBox textBox1;
+        private Button button1;
+        private DataGridView inout_jornal;
+        private Label label1;
     }
 }
 
