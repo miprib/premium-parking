@@ -61,12 +61,16 @@ namespace PremiumParking
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.backButton = new System.Windows.Forms.Button();
+            this.residentsTable = new System.Windows.Forms.DataGridView();
+            this.Delete = new System.Windows.Forms.Button();
             this.consoleTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inout_jornal)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.residentsTable)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -329,6 +333,8 @@ namespace PremiumParking
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.Delete);
+            this.tabPage5.Controls.Add(this.residentsTable);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -377,6 +383,32 @@ namespace PremiumParking
             this.backButton.UseVisualStyleBackColor = true;
             this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
+            // residentsTable
+            // 
+            this.residentsTable.AllowUserToAddRows = false;
+            this.residentsTable.AllowUserToDeleteRows = false;
+            this.residentsTable.AllowUserToResizeColumns = false;
+            this.residentsTable.AllowUserToResizeRows = false;
+            this.residentsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.residentsTable.Location = new System.Drawing.Point(6, 3);
+            this.residentsTable.MultiSelect = false;
+            this.residentsTable.Name = "residentsTable";
+            this.residentsTable.ReadOnly = true;
+            this.residentsTable.RowTemplate.Height = 24;
+            this.residentsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.residentsTable.Size = new System.Drawing.Size(559, 410);
+            this.residentsTable.TabIndex = 0;
+            // 
+            // Delete
+            // 
+            this.Delete.Location = new System.Drawing.Point(6, 419);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(75, 23);
+            this.Delete.TabIndex = 1;
+            this.Delete.Text = "Delete";
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -396,6 +428,8 @@ namespace PremiumParking
             ((System.ComponentModel.ISupportInitialize)(this.inout_jornal)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.residentsTable)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -432,6 +466,8 @@ namespace PremiumParking
         private Label label3;
         private Label label2;
         private Button button2;
+        private DataGridView residentsTable;
+        private Button Delete;
     }
 }
 

@@ -50,5 +50,10 @@ namespace PremiumParking.DataModels
                 return hashCode;
             }
         }
+
+        public override string ToString()
+        {
+            return Name + " " + Surname + " " + LicensePlate + " " + Phone + " " + Apartaments;
+        }
     }
 }

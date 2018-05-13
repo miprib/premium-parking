@@ -36,6 +36,7 @@ namespace PremiumParking
         private void LoadResidents()
         {
             _residents = new BindingList<Resident>();
+            residentsTable.DataSource = _residents;
         }
 
         private void LoadInOut()
@@ -167,17 +168,14 @@ namespace PremiumParking
             if (failed)
             {
                 label7.Text = "Užpildykite visus laukus";
-                Console.WriteLine("1");
                 return;
             }
             Resident resident = new Resident(textBox2.Text, textBox3.Text,textBox4.Text, textBox5.Text, textBox6.Text);
             if (_residents.Contains(resident))
             {
                 label7.Text = "Toks gyventojas jau egzistuoja";
-                Console.WriteLine("2");
                 return;
             }
-            Console.WriteLine("3");
             label7.Text = "Išsaugota";
             _residents.Add(resident);
             textBox2.Text = String.Empty;
@@ -185,6 +183,18 @@ namespace PremiumParking
             textBox4.Text = String.Empty;
             textBox5.Text = String.Empty;
             textBox6.Text = String.Empty;
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            var residentsTableSelectedRow = residentsTable.SelectedRows[0];
+            var name = residentsTableSelectedRow.Cells[0].Value.ToString();
+            var surname = residentsTableSelectedRow.Cells[1].Value.ToString();
+            var license = residentsTableSelectedRow.Cells[2].Value.ToString();
+            var phone = residentsTableSelectedRow.Cells[3].Value.ToString();
+            var apartament = residentsTableSelectedRow.Cells[4].Value.ToString();
+            Resident resident = new Resident(name,surname,license,phone,apartament);
+            _residents.Remove(resident);
         }
     }
 }
