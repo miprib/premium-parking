@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PremiumParking.DataModels;
@@ -13,8 +14,10 @@ namespace PremiumParking
         private BindingList<string> _infoBoxItemsList;
         private BindingList<Vehicle> _vehicles;
         private BindingList<Resident> _residents;
+        private BindingList<Vehicle> _vehiclesArvhive;
         private BindingSource _gates;
         private System.Threading.Timer _timer;
+        private int _freeSpaces;
 
         public Form1()
         {
@@ -31,6 +34,25 @@ namespace PremiumParking
             StartTimerForConsoleLog();
             LoadInOut();
             LoadResidents();
+            LoadArchivation();
+            LoadParkingSpaces();
+        }
+
+        private void LoadParkingSpaces()
+        {
+            _freeSpaces = 5;
+            textBox7.Text = _freeSpaces.ToString();
+        }
+
+        private void LoadArchivation()
+        {
+            _vehiclesArvhive = new BindingList<Vehicle>();
+            foreach (var vehicle in _vehicles)
+            {
+                if(vehicle.InParkingLot) _vehiclesArvhive.Add(vehicle);
+            }
+
+            archivationList.DataSource = _vehiclesArvhive;
         }
 
         private void LoadResidents()
@@ -195,6 +217,24 @@ namespace PremiumParking
             var apartament = residentsTableSelectedRow.Cells[4].Value.ToString();
             Resident resident = new Resident(name,surname,license,phone,apartament);
             _residents.Remove(resident);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var archivationListSelectedRow = archivationList.SelectedRows[0];
+            var name = archivationListSelectedRow.Cells[0].Value.ToString();
+            var enter = archivationListSelectedRow.Cells[1].Value is DateTime time ? time : new DateTime();
+            var exit = archivationListSelectedRow.Cells[2].Value is DateTime dateTime ? dateTime : new DateTime();
+            var resident = archivationListSelectedRow.Cells[3].Value is bool b && b;
+            var paid = archivationListSelectedRow.Cells[4].Value as bool? ?? false;
+            Vehicle a = new Vehicle(name,enter,exit,resident,paid);
+            _vehiclesArvhive.Remove(a);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            _freeSpaces = Int32.Parse(textBox8.Text);
+            textBox7.Text = _freeSpaces.ToString();
         }
     }
 }
