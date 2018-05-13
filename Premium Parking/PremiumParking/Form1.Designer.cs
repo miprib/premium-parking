@@ -1,4 +1,7 @@
-﻿namespace PremiumParking
+﻿using System;
+using System.Windows.Forms;
+
+namespace PremiumParking
 {
     partial class Form1
     {
@@ -32,8 +35,9 @@
             this.console = new System.Windows.Forms.ListBox();
             this.consoleTab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.infoBox = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.gatesList = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -42,7 +46,6 @@
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.backButton = new System.Windows.Forms.Button();
-            this.infoBox = new System.Windows.Forms.ListBox();
             this.consoleTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -103,9 +106,18 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // infoBox
+            // 
+            this.infoBox.FormattingEnabled = true;
+            this.infoBox.ItemHeight = 16;
+            this.infoBox.Location = new System.Drawing.Point(7, 7);
+            this.infoBox.Name = "infoBox";
+            this.infoBox.Size = new System.Drawing.Size(558, 436);
+            this.infoBox.TabIndex = 0;
+            // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.gatesList);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -114,14 +126,15 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // gatesList
             // 
-            this.button1.Location = new System.Drawing.Point(23, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(523, 419);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "ATGAL";
-            this.button1.UseVisualStyleBackColor = true;
+            this.gatesList.FormattingEnabled = true;
+            this.gatesList.ItemHeight = 16;
+            this.gatesList.Location = new System.Drawing.Point(7, 7);
+            this.gatesList.Name = "gatesList";
+            this.gatesList.Size = new System.Drawing.Size(558, 436);
+            this.gatesList.TabIndex = 0;
+            this.gatesList.DoubleClick += new System.EventHandler(this.gatesList_DoubleClick);
             // 
             // tabPage3
             // 
@@ -200,15 +213,6 @@
             this.backButton.UseVisualStyleBackColor = true;
             this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
-            // infoBox
-            // 
-            this.infoBox.FormattingEnabled = true;
-            this.infoBox.ItemHeight = 16;
-            this.infoBox.Location = new System.Drawing.Point(7, 7);
-            this.infoBox.Name = "infoBox";
-            this.infoBox.Size = new System.Drawing.Size(558, 436);
-            this.infoBox.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -235,7 +239,6 @@
         private System.Windows.Forms.TabControl consoleTab;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
@@ -245,6 +248,7 @@
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.ListBox infoBox;
+        private ListBox gatesList;
     }
 }
 

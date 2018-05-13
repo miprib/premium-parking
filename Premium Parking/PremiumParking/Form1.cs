@@ -4,16 +4,16 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PremiumParking.DataModels;
 
 namespace PremiumParking
 {
     public partial class Form1 : Form
     {
-        private BindingList<string> InfoBoxItemsList;
-        private System.Threading.Timer timer;
+        private BindingList<string> _infoBoxItemsList;
+        private BindingSource _gates;
+        private System.Threading.Timer _timer;
 
         public Form1()
         {
@@ -21,26 +21,34 @@ namespace PremiumParking
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
             consoleTab.SizeMode = TabSizeMode.Fixed;
-            InfoBoxItemsList = new BindingList<string>();
-            startTimer();
-            this.infoBox.DataSource = InfoBoxItemsList;
-
+            StartSystem();
         }
 
-        private void startTimer()
+        private void StartSystem()
         {
-            timer = new System.Threading.Timer(updateConsoleLog);
-            timer.Change(5000, 5000);
-
+            LoadGates();
+            StartTimerForConsoleLog();
         }
 
-        private void updateConsoleLog(object o)
+        private void LoadGates()
         {
-            Console.WriteLine("Eiii");
-            this.Invoke((MethodInvoker)delegate()
+            var gates = new List<Gate> { new Gate(555), new Gate(5555), new Gate(444) };
+            _gates = new BindingSource {DataSource = gates};
+            gatesList.DataSource = _gates;
+        }
+
+        private void StartTimerForConsoleLog()
+        {
+            _infoBoxItemsList = new BindingList<string>(){"New list!"};
+            infoBox.DataSource = _infoBoxItemsList;
+            _timer = new System.Threading.Timer(o =>
             {
-                this.InfoBoxItemsList.Add("naus");
+                Invoke((MethodInvoker)delegate
+                {
+                    _infoBoxItemsList.Add("New message!");
+                });
             });
+            _timer.Change(5000, 5000);
         }
 
         private void menu_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,20 +99,24 @@ namespace PremiumParking
 
             if (popupNumber == (-1)) return;
 
-            using(var popupUI = new Popup(popupNumber))
+            using(var popupUi = new Popup(popupNumber))
             {
-                var result = popupUI.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    var resultReturned = popupUI.PopupReturn;
-                    console.Items.Add(resultReturned);
-                }
+                var result = popupUi.ShowDialog();
+                if (result != DialogResult.OK) return;
+                var resultReturned = popupUi.PopupReturn;
+                console.Items.Add(resultReturned);
             }
         }
 
         private void backButton_Click(object sender, EventArgs e)
         {
             consoleTab.SelectedIndex = 0;
+        }
+
+        private void gatesList_DoubleClick(object sender, EventArgs e)
+        {
+            var item = gatesList.SelectedItem as Gate;
+            item?.Change();
         }
     }
 }
