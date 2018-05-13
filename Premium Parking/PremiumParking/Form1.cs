@@ -12,6 +12,7 @@ namespace PremiumParking
     {
         private BindingList<string> _infoBoxItemsList;
         private BindingList<Vehicle> _vehicles;
+        private BindingList<Resident> _residents;
         private BindingSource _gates;
         private System.Threading.Timer _timer;
 
@@ -29,6 +30,13 @@ namespace PremiumParking
             LoadGates();
             StartTimerForConsoleLog();
             LoadInOut();
+            LoadResidents();
+        }
+
+        private void LoadResidents()
+        {
+            _residents = new BindingList<Resident>();
+            residentsTable.DataSource = _residents;
         }
 
         private void LoadInOut()
@@ -147,6 +155,46 @@ namespace PremiumParking
                 inout_jornal.DataSource = _vehicles;
             }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var failed = true;
+            failed = textBox2.Text == "";
+            failed = textBox3.Text == "";
+            failed = textBox4.Text == "";
+            failed = textBox5.Text == "";
+            failed = textBox6.Text == "";
+            if (failed)
+            {
+                label7.Text = "Užpildykite visus laukus";
+                return;
+            }
+            Resident resident = new Resident(textBox2.Text, textBox3.Text,textBox4.Text, textBox5.Text, textBox6.Text);
+            if (_residents.Contains(resident))
+            {
+                label7.Text = "Toks gyventojas jau egzistuoja";
+                return;
+            }
+            label7.Text = "Išsaugota";
+            _residents.Add(resident);
+            textBox2.Text = String.Empty;
+            textBox3.Text = String.Empty;
+            textBox4.Text = String.Empty;
+            textBox5.Text = String.Empty;
+            textBox6.Text = String.Empty;
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            var residentsTableSelectedRow = residentsTable.SelectedRows[0];
+            var name = residentsTableSelectedRow.Cells[0].Value.ToString();
+            var surname = residentsTableSelectedRow.Cells[1].Value.ToString();
+            var license = residentsTableSelectedRow.Cells[2].Value.ToString();
+            var phone = residentsTableSelectedRow.Cells[3].Value.ToString();
+            var apartament = residentsTableSelectedRow.Cells[4].Value.ToString();
+            Resident resident = new Resident(name,surname,license,phone,apartament);
+            _residents.Remove(resident);
         }
     }
 }
