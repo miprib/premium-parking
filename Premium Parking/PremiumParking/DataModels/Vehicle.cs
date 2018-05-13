@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace PremiumParking.DataModels
 {
-    class Vehicle
+    class Vehicle : IEquatable<Vehicle>
     {
         public string LicensePlate { get; set; }
         public DateTime timepstampEntry { get; set; }
         public DateTime timestampExit { get; set; }
+        public bool InParkingLot { get; set; }
         public bool Resident { get; set; }
         public bool Paid { get; set; }
 
@@ -20,11 +21,23 @@ namespace PremiumParking.DataModels
             LicensePlate = licensePlate;
             timepstampEntry = DateTime.Now;
             Resident = resident;
+            InParkingLot = true;
             if (!resident) Paid = false;
+        }
+
+        public Vehicle(string l, DateTime e, DateTime ex, bool res, bool paid)
+        {
+            LicensePlate = l;
+            timestampExit = e;
+            timestampExit = ex;
+            InParkingLot = true;
+            Resident = res;
+            Paid = paid;
         }
 
         public void OnExit()
         {
+            InParkingLot = false;
             timestampExit = DateTime.Now;
         }
 
@@ -48,6 +61,11 @@ namespace PremiumParking.DataModels
             }
 
             return a;
+        }
+
+        public bool Equals(Vehicle other)
+        {
+            return (other.LicensePlate.Equals(this.LicensePlate)) && (other.InParkingLot.Equals(this.InParkingLot));
         }
     }
 }
