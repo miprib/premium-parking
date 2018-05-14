@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PremiumParking.DataModels;
@@ -18,6 +17,7 @@ namespace PremiumParking
         private BindingSource _gates;
         private System.Threading.Timer _timer;
         private int _freeSpaces;
+        private int lights;
 
         public Form1()
         {
@@ -36,6 +36,8 @@ namespace PremiumParking
             LoadResidents();
             LoadArchivation();
             LoadParkingSpaces();
+            lights = 100;
+            trackBar1.Value = lights;
         }
 
         private void LoadParkingSpaces()
@@ -126,7 +128,7 @@ namespace PremiumParking
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 case 6:
-                    consoleTab.SelectedIndex = 0;
+                    consoleTab.SelectedIndex = 7;
                     Console.WriteLine(menu.SelectedItem);
                     break;
                 default:
@@ -181,24 +183,18 @@ namespace PremiumParking
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var failed = true;
-            failed = textBox2.Text == "";
-            failed = textBox3.Text == "";
-            failed = textBox4.Text == "";
-            failed = textBox5.Text == "";
-            failed = textBox6.Text == "";
-            if (failed)
+            if ((textBox2.Text == "") && (textBox3.Text == "") && (textBox4.Text == "") && (textBox5.Text == "") && (textBox6.Text == ""))
             {
-                label7.Text = "Užpildykite visus laukus";
+                label7.Text = @"Užpildykite visus laukus";
                 return;
             }
             Resident resident = new Resident(textBox2.Text, textBox3.Text,textBox4.Text, textBox5.Text, textBox6.Text);
             if (_residents.Contains(resident))
             {
-                label7.Text = "Toks gyventojas jau egzistuoja";
+                label7.Text = @"Toks gyventojas jau egzistuoja";
                 return;
             }
-            label7.Text = "Išsaugota";
+            label7.Text = @"Išsaugota";
             _residents.Add(resident);
             textBox2.Text = String.Empty;
             textBox3.Text = String.Empty;
@@ -235,6 +231,12 @@ namespace PremiumParking
         {
             _freeSpaces = Int32.Parse(textBox8.Text);
             textBox7.Text = _freeSpaces.ToString();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            lights = trackBar1.Value;
+            console.Items.Add("Pakeista " + lights + "%");
         }
     }
 }
