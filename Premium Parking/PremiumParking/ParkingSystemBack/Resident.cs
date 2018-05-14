@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PremiumParking.DataModels
+namespace PremiumParking.ParkingSystemBack
 {
-    class Resident : IEquatable<Resident>
+    public class Resident : IEquatable<Resident>
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -21,6 +18,20 @@ namespace PremiumParking.DataModels
             LicensePlate = licensePlate;
             Phone = phone;
             Apartaments = apartaments;
+        }
+
+        public static List<Resident> ResidentsFactory()
+        {
+            return new List<Resident>()
+            {
+                new Resident("Simis", "Simutis", "AAA001", "8888", "1"),
+                new Resident("a", "a", "AAA002", "888", "2"),
+                new Resident("b", "b", "AAA003", "88", "3"),
+                new Resident("c", "c", "AAA004", "8", "4"),
+                new Resident("d", "d", "AAA005", "88888", "5"),
+                new Resident("e", "e", "AAA006", "888888", "6"),
+                new Resident("f", "f", "AAA007", "8888888", "7")
+            };
         }
 
         public bool Equals(Resident other)

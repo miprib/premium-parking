@@ -45,15 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModels\Gate.cs" />
-    <Compile Include="DataModels\Resident.cs" />
-    <Compile Include="DataModels\Vehicle.cs" />
+    <Compile Include="ParkingSystemBack\Camera.cs" />
+    <Compile Include="ParkingSystemBack\Gate.cs" />
+    <Compile Include="ParkingSystemBack\ParkingSensor.cs" />
+    <Compile Include="ParkingSystemBack\Resident.cs" />
+    <Compile Include="ParkingSystemBack\Vehicle.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParkingSystemBack\Console.cs" />
+    <Compile Include="ParkingSystemBack\Lamp.cs" />
+    <Compile Include="ParkingSystemBack\ParkingLot.cs" />
+    <Compile Include="ParkingSystemBack\ParkingSpace.cs" />
     <Compile Include="Popup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
