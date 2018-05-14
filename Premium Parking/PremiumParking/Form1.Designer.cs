@@ -205,6 +205,7 @@ namespace PremiumParking
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
+            this.tabPage6.VisibleChanged += new EventHandler(this.LoadArchivation);
             // 
             // archivationList
             // 

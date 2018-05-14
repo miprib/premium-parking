@@ -51,7 +51,7 @@ namespace PremiumParking
                 case "Pašalinti rezervuotą vietą":
                     PopupReturn = 4;
                     break;
-                case "Pakeisti laisvų vietų skaičių":
+                case "Pakeisti esamų vietų skaičių":
                     PopupReturn = 6;
                     break;
                 default:

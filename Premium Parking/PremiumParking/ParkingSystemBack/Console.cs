@@ -46,5 +46,31 @@ namespace PremiumParking.ParkingSystemBack
             }
             return vehicle;
         }
+
+        public List<Vehicle> GetVehicleList()
+        {
+            List<Vehicle> vehicles = new List<Vehicle>(NotParkedVehicles);
+            foreach (var parkingLotParkingSpace in ParkingLot.ParkingSpaces)
+            {
+                if (parkingLotParkingSpace.Vehicle != null)
+                {
+                    vehicles.Add(parkingLotParkingSpace.Vehicle);
+                }
+            }
+            return vehicles;
+        }
+
+        public void ArchiveCar(Vehicle vehicle)
+        {
+            if (!NotParkedVehicles.Remove(vehicle))
+            {
+                foreach (var parkingLotParkingSpace in ParkingLot.ParkingSpaces)
+                {
+                    if (parkingLotParkingSpace.Vehicle == null) continue;
+                    if (!parkingLotParkingSpace.Vehicle.Equals(vehicle)) continue;
+                    parkingLotParkingSpace.Vehicle = null;
+                }
+            }
+        }
     }
 }

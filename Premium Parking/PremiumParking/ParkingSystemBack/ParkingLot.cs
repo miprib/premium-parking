@@ -11,9 +11,11 @@ namespace PremiumParking.ParkingSystemBack
         public List<ParkingSpace> ParkingSpaces { get; set; }
         public byte Brightness { get; set; }
         public string Message { get; set; }
+        private Console _console;
 
         private ParkingLot(int total, int disabled, int motorbike, int electric, ref Console console)
         {
+            _console = console;
             Brightness = 100;
             ParkingSpaces = new List<ParkingSpace>();
             for (var i = 0; i < disabled; i++)
@@ -37,6 +39,34 @@ namespace PremiumParking.ParkingSystemBack
         public static ParkingLot CreateInstace(int total, int disabled, int motorbike, int electric, Console console)
         {
             return total > disabled + motorbike + electric ? new ParkingLot(total, disabled, motorbike, electric, ref console) : null;
+        }
+
+        public int GetTotalCount()
+        {
+            return ParkingSpaces.Count;
+        }
+
+        public void SetTotal(int n)
+        {
+            if (ParkingSpaces.Count < n)
+            {
+                n -= ParkingSpaces.Count;
+                for (int i = 0; i < n; i++)
+                {
+                    ParkingSpaces.Add(new ParkingSpace("regular", ref _console));
+                }
+            }
+            else
+            {
+                if (ParkingSpaces.Count == n)
+                {
+                    return;
+                }
+                else
+                {
+                    ParkingSpaces.RemoveRange(ParkingSpaces.Count - n, n);
+                }
+            }
         }
     }
 }

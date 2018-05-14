@@ -11,17 +11,18 @@ namespace PremiumParking
 {
     public partial class Form1 : Form
     {
+        private ParkingSystemBack.Console _console;
         private BindingList<string> _infoBoxItemsList;
         private BindingList<Vehicle> _vehicles;
         private BindingList<Resident> _residents;
         private BindingList<Vehicle> _vehiclesArvhive;
         private BindingSource _gates;
         private System.Threading.Timer _timer;
-        private int _freeSpaces;
         private int lights;
 
         public Form1(ParkingSystemBack.Console console)
         {
+            _console = console;
             InitializeComponent();
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
@@ -35,26 +36,19 @@ namespace PremiumParking
             StartTimerForConsoleLog();
             LoadInOut();
             LoadResidents();
-            LoadArchivation();
-            LoadParkingSpaces();
+            LoadParkingSpaces();  // Done
             lights = 100;
             trackBar1.Value = lights;
         }
-
+        ///////////////////////////////////////////////////////////done
         private void LoadParkingSpaces()
         {
-            _freeSpaces = 5;
-            textBox7.Text = _freeSpaces.ToString();
+            textBox7.Text = _console.ParkingLot.GetTotalCount().ToString();
         }
-
-        private void LoadArchivation()
+        ///////////////////////////////////////////////////////////done
+        private void LoadArchivation(object sender, EventArgs e)
         {
-            _vehiclesArvhive = new BindingList<Vehicle>();
-            foreach (var vehicle in _vehicles)
-            {
-                if(vehicle.InParkingLot) _vehiclesArvhive.Add(vehicle);
-            }
-
+            _vehiclesArvhive = new BindingList<Vehicle>(_console.GetVehicleList());
             archivationList.DataSource = _vehiclesArvhive;
         }
 
@@ -227,12 +221,13 @@ namespace PremiumParking
             var paid = archivationListSelectedRow.Cells[4].Value as bool? ?? false;
             Vehicle a = new Vehicle(name,enter,exit,resident,paid);
             _vehiclesArvhive.Remove(a);
+            _console.ArchiveCar(a);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            _freeSpaces = Int32.Parse(textBox8.Text);
-            textBox7.Text = _freeSpaces.ToString();
+            _console.ParkingLot.SetTotal(Int32.Parse(textBox8.Text));
+            textBox7.Text = _console.ParkingLot.GetTotalCount().ToString();
         }
 
         private void button5_Click(object sender, EventArgs e)
