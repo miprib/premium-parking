@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using PremiumParking.DataModels;
+using PremiumParking.ParkingSystemBack;
+using Console = System.Console;
 
 namespace PremiumParking
 {
@@ -19,7 +20,7 @@ namespace PremiumParking
         private int _freeSpaces;
         private int lights;
 
-        public Form1()
+        public Form1(ParkingSystemBack.Console console)
         {
             InitializeComponent();
             consoleTab.Appearance = TabAppearance.FlatButtons;
@@ -156,6 +157,7 @@ namespace PremiumParking
         {
             var item = gatesList.SelectedItem as Gate;
             item?.Change();
+            console.Items.Add("Vardai " + item.Id + " " + (item.State ? "atidaromi" : "uždaromi"));
         }
 
         private void button1_Click(object sender, EventArgs e)

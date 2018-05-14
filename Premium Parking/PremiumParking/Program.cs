@@ -14,9 +14,10 @@ namespace PremiumParking
         [STAThread]
         static void Main()
         {
+            var console = new ParkingSystemBack.Console();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Form1(console));
         }
     }
 }

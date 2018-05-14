@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PremiumParking.DataModels
+namespace PremiumParking.ParkingSystemBack
 {
-    class Vehicle : IEquatable<Vehicle>
+    public class Vehicle : IEquatable<Vehicle>
     {
         public string LicensePlate { get; set; }
         public DateTime timepstampEntry { get; set; }
