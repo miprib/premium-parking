@@ -243,6 +243,7 @@ namespace PremiumParking
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPage5.VisibleChanged += new EventHandler(this.LoadResidents);
             // 
             // Delete
             // 

@@ -72,5 +72,10 @@ namespace PremiumParking.ParkingSystemBack
                 }
             }
         }
+
+        public void RemoveResident(Resident resident)
+        {
+            ResidentsList.Remove(resident);
+        }
     }
 }

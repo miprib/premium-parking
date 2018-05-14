@@ -35,7 +35,6 @@ namespace PremiumParking
             LoadGates();
             StartTimerForConsoleLog();
             LoadInOut();
-            LoadResidents();
             LoadParkingSpaces();  // Done
             lights = 100;
             trackBar1.Value = lights;
@@ -45,16 +44,17 @@ namespace PremiumParking
         {
             textBox7.Text = _console.ParkingLot.GetTotalCount().ToString();
         }
-        ///////////////////////////////////////////////////////////done
+
         private void LoadArchivation(object sender, EventArgs e)
         {
             _vehiclesArvhive = new BindingList<Vehicle>(_console.GetVehicleList());
             archivationList.DataSource = _vehiclesArvhive;
         }
+        ///////////////////////////////////////////////////////////done
 
-        private void LoadResidents()
+        private void LoadResidents(object sender, EventArgs e)
         {
-            _residents = new BindingList<Resident>();
+            _residents = new BindingList<Resident>(_console.ResidentsList);
             residentsTable.DataSource = _residents;
         }
 
@@ -185,13 +185,13 @@ namespace PremiumParking
                 return;
             }
             Resident resident = new Resident(textBox2.Text, textBox3.Text,textBox4.Text, textBox5.Text, textBox6.Text);
-            if (_residents.Contains(resident))
+            if (_console.ResidentsList.Contains(resident))
             {
                 label7.Text = @"Toks gyventojas jau egzistuoja";
                 return;
             }
             label7.Text = @"Išsaugota";
-            _residents.Add(resident);
+            _console.ResidentsList.Add(resident);
             textBox2.Text = String.Empty;
             textBox3.Text = String.Empty;
             textBox4.Text = String.Empty;
@@ -209,6 +209,7 @@ namespace PremiumParking
             var apartament = residentsTableSelectedRow.Cells[4].Value.ToString();
             Resident resident = new Resident(name,surname,license,phone,apartament);
             _residents.Remove(resident);
+            _console.RemoveResident(resident);
         }
 
         private void button3_Click(object sender, EventArgs e)
