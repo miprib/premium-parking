@@ -32,9 +32,10 @@ namespace PremiumParking
         private void InitializeComponent()
         {
             this.menu = new System.Windows.Forms.ListBox();
-            this.console = new System.Windows.Forms.ListBox();
             this.backButton = new System.Windows.Forms.Button();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.button4 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -70,9 +71,8 @@ namespace PremiumParking
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.infoBox = new System.Windows.Forms.ListBox();
             this.consoleTab = new System.Windows.Forms.TabControl();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.button5 = new System.Windows.Forms.Button();
             this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabPage7.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.archivationList)).BeginInit();
@@ -84,13 +84,14 @@ namespace PremiumParking
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.consoleTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
             // 
+            this.menu.Cursor = System.Windows.Forms.Cursors.Default;
+            this.menu.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.menu.FormattingEnabled = true;
-            this.menu.ItemHeight = 16;
+            this.menu.ItemHeight = 26;
             this.menu.Items.AddRange(new object[] {
             "Vartų kontrolė",
             "Peržiūrėti informaciją",
@@ -101,18 +102,9 @@ namespace PremiumParking
             "Lempučių ryškumas"});
             this.menu.Location = new System.Drawing.Point(12, 12);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(276, 116);
+            this.menu.Size = new System.Drawing.Size(276, 498);
             this.menu.TabIndex = 0;
             this.menu.DoubleClick += new System.EventHandler(this.menu_SelectedIndexChanged);
-            // 
-            // console
-            // 
-            this.console.FormattingEnabled = true;
-            this.console.ItemHeight = 16;
-            this.console.Location = new System.Drawing.Point(13, 149);
-            this.console.Name = "console";
-            this.console.Size = new System.Drawing.Size(275, 340);
-            this.console.TabIndex = 1;
             // 
             // backButton
             // 
@@ -135,7 +127,26 @@ namespace PremiumParking
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "tabPage8";
             this.tabPage8.UseVisualStyleBackColor = true;
-            this.tabPage8.VisibleChanged += new EventHandler(this.LoadLights);
+            this.tabPage8.VisibleChanged += new System.EventHandler(this.LoadLights);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(7, 67);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Išsaugoti";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.LargeChange = 1;
+            this.trackBar1.Location = new System.Drawing.Point(6, 6);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(559, 56);
+            this.trackBar1.TabIndex = 0;
             // 
             // tabPage7
             // 
@@ -151,7 +162,7 @@ namespace PremiumParking
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "tabPage7";
             this.tabPage7.UseVisualStyleBackColor = true;
-            this.tabPage7.VisibleChanged += new EventHandler(this.LoadParkingSpaces);
+            this.tabPage7.VisibleChanged += new System.EventHandler(this.LoadParkingSpaces);
             // 
             // button4
             // 
@@ -207,7 +218,7 @@ namespace PremiumParking
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
-            this.tabPage6.VisibleChanged += new EventHandler(this.LoadArchivation);
+            this.tabPage6.VisibleChanged += new System.EventHandler(this.LoadArchivation);
             // 
             // archivationList
             // 
@@ -245,7 +256,7 @@ namespace PremiumParking
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
-            this.tabPage5.VisibleChanged += new EventHandler(this.LoadResidents);
+            this.tabPage5.VisibleChanged += new System.EventHandler(this.LoadResidents);
             // 
             // Delete
             // 
@@ -406,7 +417,7 @@ namespace PremiumParking
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.VisibleChanged += new EventHandler(this.LoadInOut);
+            this.tabPage3.VisibleChanged += new System.EventHandler(this.LoadInOut);
             // 
             // inout_jornal
             // 
@@ -458,7 +469,7 @@ namespace PremiumParking
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.VisibleChanged += new EventHandler(this.LoadGates);
+            this.tabPage2.VisibleChanged += new System.EventHandler(this.LoadGates);
             // 
             // gatesList
             // 
@@ -480,7 +491,7 @@ namespace PremiumParking
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.VisibleChanged += new EventHandler(this.LoadConsoleLog);
+            this.tabPage1.VisibleChanged += new System.EventHandler(this.LoadConsoleLog);
             // 
             // infoBox
             // 
@@ -507,25 +518,6 @@ namespace PremiumParking
             this.consoleTab.Size = new System.Drawing.Size(579, 477);
             this.consoleTab.TabIndex = 2;
             // 
-            // trackBar1
-            // 
-            this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(6, 6);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(559, 56);
-            this.trackBar1.TabIndex = 0;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(7, 67);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Išsaugoti";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -533,12 +525,12 @@ namespace PremiumParking
             this.ClientSize = new System.Drawing.Size(895, 520);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.consoleTab);
-            this.Controls.Add(this.console);
             this.Controls.Add(this.menu);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
             this.tabPage6.ResumeLayout(false);
@@ -553,7 +545,6 @@ namespace PremiumParking
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.consoleTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -561,7 +552,6 @@ namespace PremiumParking
         #endregion
 
         private System.Windows.Forms.ListBox menu;
-        private System.Windows.Forms.ListBox console;
         private System.Windows.Forms.Button backButton;
         private TabPage tabPage8;
         private TabPage tabPage7;

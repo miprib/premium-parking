@@ -9,59 +9,23 @@ namespace PremiumParking.ParkingSystemBack
 {
     public class Camera
     {
-        public Timer Timer { get; set; }
         public int Id { get; set; }
         public Console Test;
 
-        public Camera(Console forInvokeConsole, int id)
+        public Camera(Console console, int id)
         {
-            Test = forInvokeConsole;
+            Test = console;
             Id = id;
-            Timer = new Timer(o =>
-            {
-                if (forInvokeConsole.ParkingLot.IsFree())
-                {
-                    forInvokeConsole.CarIn(RandomString(6), Id);
-                }
-                else
-                {
-                    forInvokeConsole.NotFree();
-                }
-            });
-
-            Timer timer2 = new Timer(o =>
-            {
-                Vehicle vehicle = forInvokeConsole.NotParkedVehicles.FirstOrDefault();
-                if (vehicle != null)
-                {
-                    forInvokeConsole.CarOut(vehicle, Id);
-                }
-            });
-
-            timer2.Change(30000, 30000);
-
-            Timer.Change(5000, 20000);
         }
 
-        public void SimisIn()
+        public void In(string license)
         {
-            if (Test.ParkingLot.IsFree())
-            {
-                Test.CarIn("AAA001", Id);
-            }
-            else
-            {
-                Test.NotFree();
-            }
+            Test.CarIn(license, Id);
         }
 
-        public void SimisOut()
+        public void Out(string license)
         {
-            Vehicle vehicle = Test.NotParkedVehicles.FirstOrDefault(v => v.Resident);
-            if (vehicle != null)
-            {
-                Test.CarOut(vehicle, Id);
-            }
+            Test.CarOut(license, Id);
         }
 
         private readonly Random _random = new Random();

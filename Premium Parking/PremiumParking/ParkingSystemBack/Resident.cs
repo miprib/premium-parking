@@ -25,8 +25,8 @@ namespace PremiumParking.ParkingSystemBack
             return new List<Resident>()
             {
                 new Resident("Simis", "Simutis", "AAA001", "8888", "1"),
-                new Resident("a", "a", "AAA002", "888", "2"),
-                new Resident("b", "b", "AAA003", "88", "3")
+                new Resident("a", "a", "AAA005", "888", "2"),
+                new Resident("b", "b", "AAA006", "88", "3")
             };
         }
 

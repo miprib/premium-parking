@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="ParkingSystemBack\Camera.cs" />
     <Compile Include="ParkingSystemBack\Gate.cs" />
+    <Compile Include="ParkingSystemBack\GatesSensor.cs" />
     <Compile Include="ParkingSystemBack\ParkingSensor.cs" />
     <Compile Include="ParkingSystemBack\Resident.cs" />
     <Compile Include="ParkingSystemBack\Vehicle.cs" />
