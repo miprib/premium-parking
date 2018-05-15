@@ -211,7 +211,7 @@ namespace PremiumParking.ParkingSystemBack
             {
                 foreach (var parkingLotParkingSpace in ParkingLot.ParkingSpaces)
                 {
-                    if (parkingLotParkingSpace.Vehicle.LicensePlate == licensePlat)
+                    if (parkingLotParkingSpace.Vehicle != null && parkingLotParkingSpace.Vehicle.LicensePlate == licensePlat)
                     {
                         parkingLotParkingSpace.Vehicle.OnPay();
                         return;
