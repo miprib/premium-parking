@@ -18,7 +18,7 @@ namespace PremiumParking
         {
             _console = console;
             InitializeComponent();
-            _console.ConsoleLogM(this);
+            _console.FormInstance(this);
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
             consoleTab.SizeMode = TabSizeMode.Fixed;
@@ -137,7 +137,7 @@ namespace PremiumParking
         {
             var item = gatesList.SelectedItem as Gate;
             item?.Change();
-            console.Items.Add("Vardai " + item.Id + " " + (item.State ? "atidaromi" : "uždaromi"));
+            _console.ConsoleLog.Add("Vardai " + item.Id + " " + (item.State ? "atidaromi" : "uždaromi"));
         }
 
         private void button1_Click(object sender, EventArgs e)

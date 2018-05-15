@@ -18,7 +18,7 @@ namespace PremiumParking.ParkingSystemBack
             timepstampEntry = DateTime.Now;
             Resident = resident;
             InParkingLot = true;
-            if (!resident) Paid = false;
+            Paid = resident;
         }
 
         public Vehicle(string l, DateTime e, DateTime ex, bool res, bool paid)
@@ -42,21 +42,9 @@ namespace PremiumParking.ParkingSystemBack
             Paid = true;
         }
 
-        public static BindingList<Vehicle> MakeMany()
+        public override string ToString()
         {
-            var a = new BindingList<Vehicle>();
-            for (int i = 1; i < 31; i++)
-            {
-                Vehicle v = new Vehicle("AAA" + i.ToString().PadLeft(3,'0'),true);
-                a.Add(v);
-            }
-
-            for (int i = 0; i < 30; i += 2)
-            {
-                a[i].OnExit();
-            }
-
-            return a;
+            return LicensePlate.ToString();
         }
 
         public bool Equals(Vehicle other)

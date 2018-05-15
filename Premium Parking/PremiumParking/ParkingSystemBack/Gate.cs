@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace PremiumParking.ParkingSystemBack
 {
@@ -25,21 +27,30 @@ namespace PremiumParking.ParkingSystemBack
             return "Vartai " + Id.ToString() + "   " + (State ? "Atidaryta" : "Uždaryta");
         }
 
-        public static List<Gate> MakeGates()
-        {
-            return new List<Gate>()
-            {
-                new Gate(555),
-                new Gate(5555),
-                new Gate(444)
-            };
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string info)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+        }
+
+        public bool OpenVehicle()
+        {
+            if (State == true) return true;
+            State = true;
+            System.Threading.Thread.Sleep(5000);
+            if (new Random().Next(0, 100) >= 95) return true;
+            State = false;
+            return false;
+        }
+
+        public void TryClose()
+        {
+            while (new Random().Next(0, 100) < 50)
+            {
+                State = true;
+            }
+            State = false;
         }
     }
 }

@@ -10,8 +10,9 @@ namespace PremiumParking.ParkingSystemBack
 {
     public class Console
     {
+        public Form1 Form { get; set; }
         public ParkingLot ParkingLot { get; set; }
-        public Camera Camera { get; set; }
+        public List<Camera> Camera { get; set; }
         public List<Gate> Gates { get; set; }
         public List<Vehicle> NotParkedVehicles { get; set; }
         public List<Resident> ResidentsList { get; set; }
@@ -20,8 +21,8 @@ namespace PremiumParking.ParkingSystemBack
 
         public Console()
         {
-            Gates = Gate.MakeGates();
-            Camera = new Camera(this);
+            Gates = new List<Gate>() { new Gate(444) };
+            Camera = MakeCameras(Gates);
             ResidentsList = Resident.ResidentsFactory();
             NotParkedVehicles = new List<Vehicle>();
             MockedVehiclesInOut = new List<Vehicle>();
@@ -29,20 +30,30 @@ namespace PremiumParking.ParkingSystemBack
             ConsoleLog = new BindingList<string>();
         }
 
-        public void ConsoleLogM(Form1 f)
+        private List<Camera> MakeCameras(List<Gate> gates)
         {
-            System.Threading.Timer t = new System.Threading.Timer(o => 
+            var a = new List<Camera>();
+            foreach (var gate in gates)
             {
-                f.Invoke((MethodInvoker)delegate
-                {
-                    this.ConsoleLog.Add("heyyyy");
-                });
-            });
-            t.Change(1000, 1000);
+                a.Add(new Camera(this, gate.Id));
+            }
+
+            return a;
         }
 
-        public void CarIn(string licensePlate)
+        public void CarIn(string licensePlate, int camId)
         {
+            Gate g = Gates.FirstOrDefault(gt => gt.Id == camId);
+            if (g == null)
+            {
+                Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Kameros klaida"); });
+            }
+
+            if (g.OpenVehicle())
+            {
+                Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Mašina stovi po vartais!!!"); });
+                g.TryClose();
+            }
             Vehicle vehicle;
             foreach (var resident in ResidentsList)
             {
@@ -53,6 +64,17 @@ namespace PremiumParking.ParkingSystemBack
                 return;
             }
             vehicle = new Vehicle(licensePlate, false);
+            System.Threading.Timer timer = new System.Threading.Timer(o =>
+            {
+                if (NotParkedVehicles.Contains(vehicle))
+                {
+                    Form.Invoke((MethodInvoker) delegate
+                    {
+                        ConsoleLog.Add("Nepastatytas automobilis " + vehicle.ToString());
+                    });
+                }
+            });
+            timer.Change(50000, 0);
             MockedVehiclesInOut.Add(vehicle);
             NotParkedVehicles.Add(vehicle);
         }
@@ -108,7 +130,40 @@ namespace PremiumParking.ParkingSystemBack
 
         public void NotFree()
         {
-            throw new NotImplementedException();
+            Form.Invoke((MethodInvoker) delegate
+            {
+                ConsoleLog.Add("Aikštelė pilna");
+            });
+        }
+
+        public void FormInstance(Form1 form1)
+        {
+            Form = form1;
+        }
+
+        public void CarOut(Vehicle vehicle, int camId)
+        {
+            Gate g = Gates.FirstOrDefault(gt => gt.Id == camId);
+            if (g == null)
+            {
+                Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Kameros klaida"); });
+            }
+
+            if (!vehicle.Paid)
+            {
+                Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Važiuoja nesusimokėjus " + vehicle); });
+                return;
+            }
+
+            if (g.OpenVehicle())
+            {
+                Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Mašina stovi po vartais!!!"); });
+                g.TryClose();
+            }
+
+            NotParkedVehicles.Remove(vehicle);
+            Vehicle v = MockedVehiclesInOut.FirstOrDefault(veh => veh == vehicle);
+            v.OnExit();
         }
     }
 }
