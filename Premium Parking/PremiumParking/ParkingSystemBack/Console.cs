@@ -30,7 +30,7 @@ namespace PremiumParking.ParkingSystemBack
             ConsoleLog = new BindingList<string>();
         }
 
-        private List<Camera> MakeCameras(List<Gate> gates)
+        public List<Camera> MakeCameras(List<Gate> gates)
         {
             var a = new List<Camera>();
             foreach (var gate in gates)
@@ -122,12 +122,12 @@ namespace PremiumParking.ParkingSystemBack
             v.OnExit();
         }
 
-        private bool CheckIfNotParked(Vehicle vehicle)
+        public bool CheckIfNotParked(Vehicle vehicle)
         {
             return NotParkedVehicles.Contains(vehicle);
         }
 
-        private bool CheckBoxInParkingLot(string plate)
+        public bool CheckBoxInParkingLot(string plate)
         {
             foreach (var vehicle in MockedVehiclesInOut)
             {
