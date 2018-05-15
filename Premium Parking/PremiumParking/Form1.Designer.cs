@@ -135,6 +135,7 @@ namespace PremiumParking
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "tabPage8";
             this.tabPage8.UseVisualStyleBackColor = true;
+            this.tabPage8.VisibleChanged += new EventHandler(this.LoadLights);
             // 
             // tabPage7
             // 
@@ -150,6 +151,7 @@ namespace PremiumParking
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "tabPage7";
             this.tabPage7.UseVisualStyleBackColor = true;
+            this.tabPage7.VisibleChanged += new EventHandler(this.LoadParkingSpaces);
             // 
             // button4
             // 
@@ -404,6 +406,7 @@ namespace PremiumParking
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage3.VisibleChanged += new EventHandler(this.LoadInOut);
             // 
             // inout_jornal
             // 
@@ -455,6 +458,7 @@ namespace PremiumParking
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.VisibleChanged += new EventHandler(this.LoadGates);
             // 
             // gatesList
             // 

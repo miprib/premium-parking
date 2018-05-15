@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace PremiumParking.ParkingSystemBack
 {
@@ -22,6 +23,16 @@ namespace PremiumParking.ParkingSystemBack
         public override string ToString()
         {
             return "Vartai " + Id.ToString() + "   " + (State ? "Atidaryta" : "Uždaryta");
+        }
+
+        public static List<Gate> MakeGates()
+        {
+            return new List<Gate>()
+            {
+                new Gate(555),
+                new Gate(5555),
+                new Gate(444)
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

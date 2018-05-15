@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PremiumParking.ParkingSystemBack;
@@ -16,9 +17,7 @@ namespace PremiumParking
         private BindingList<Vehicle> _vehicles;
         private BindingList<Resident> _residents;
         private BindingList<Vehicle> _vehiclesArvhive;
-        private BindingSource _gates;
         private System.Threading.Timer _timer;
-        private int lights;
 
         public Form1(ParkingSystemBack.Console console)
         {
@@ -32,15 +31,15 @@ namespace PremiumParking
 
         private void StartSystem()
         {
-            LoadGates();
             StartTimerForConsoleLog();
-            LoadInOut();
-            LoadParkingSpaces();  // Done
-            lights = 100;
-            trackBar1.Value = lights;
         }
-        ///////////////////////////////////////////////////////////done
-        private void LoadParkingSpaces()
+
+        private void LoadLights(object sender, EventArgs e)
+        {
+            trackBar1.Value = _console.ParkingLot.Brightness;
+        }
+
+        private void LoadParkingSpaces(object sender, EventArgs e)
         {
             textBox7.Text = _console.ParkingLot.GetTotalCount().ToString();
         }
@@ -50,7 +49,6 @@ namespace PremiumParking
             _vehiclesArvhive = new BindingList<Vehicle>(_console.GetVehicleList());
             archivationList.DataSource = _vehiclesArvhive;
         }
-        ///////////////////////////////////////////////////////////done
 
         private void LoadResidents(object sender, EventArgs e)
         {
@@ -58,18 +56,17 @@ namespace PremiumParking
             residentsTable.DataSource = _residents;
         }
 
-        private void LoadInOut()
+        private void LoadInOut(object sender, EventArgs e)
         {
-            _vehicles = Vehicle.MakeMany();
+            _vehicles = new BindingList<Vehicle>(_console.MockedVehiclesInOut);
             inout_jornal.AutoGenerateColumns = true;
             inout_jornal.DataSource = _vehicles;
         }
 
-        private void LoadGates()
+        private void LoadGates(object sender, EventArgs e)
         {
-            var gates = new List<Gate> { new Gate(555), new Gate(5555), new Gate(444) };
-            _gates = new BindingSource {DataSource = gates};
-            gatesList.DataSource = _gates;
+            var bGates = new BindingList<Gate>(_console.Gates);
+            gatesList.DataSource = bGates;
         }
 
         private void StartTimerForConsoleLog()
@@ -151,7 +148,7 @@ namespace PremiumParking
         {
             var item = gatesList.SelectedItem as Gate;
             item?.Change();
-            console.Items.Add("Vardai " + item.Id + " " + (item.State ? "atidaromi" : "uždaromi"));
+            console.Items.Add("Vardai " + _console.Gates.FirstOrDefault(g => g==item).Id + " " + (_console.Gates.FirstOrDefault(g => g == item).State ? "atidaromi" : "uždaromi"));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -233,8 +230,8 @@ namespace PremiumParking
 
         private void button5_Click(object sender, EventArgs e)
         {
-            lights = trackBar1.Value;
-            console.Items.Add("Pakeista " + lights + "%");
+            _console.ParkingLot.Brightness = (byte)trackBar1.Value;
+            console.Items.Add("Pakeista " + trackBar1.Value + "%");
         }
     }
 }
