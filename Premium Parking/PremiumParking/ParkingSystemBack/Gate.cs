@@ -38,7 +38,6 @@ namespace PremiumParking.ParkingSystemBack
         {
             if (State == true) return true;
             State = true;
-            System.Threading.Thread.Sleep(5000);
             if (new Random().Next(0, 100) >= 95) return true;
             State = false;
             return false;

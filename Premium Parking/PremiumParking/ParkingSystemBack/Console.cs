@@ -49,6 +49,12 @@ namespace PremiumParking.ParkingSystemBack
                 Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Kameros klaida"); });
             }
 
+            if (CheckBoxInParkingLot(licensePlate))
+            {
+                Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Mašina jau aikštelėje " + licensePlate); });
+                return;
+            }
+
             if (g.OpenVehicle())
             {
                 Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Mašina stovi po vartais!!!"); });
@@ -77,6 +83,19 @@ namespace PremiumParking.ParkingSystemBack
             timer.Change(50000, 0);
             MockedVehiclesInOut.Add(vehicle);
             NotParkedVehicles.Add(vehicle);
+        }
+
+        private bool CheckBoxInParkingLot(string plate)
+        {
+            foreach (var vehicle in MockedVehiclesInOut)
+            {
+                if (vehicle.LicensePlate == plate && vehicle.InParkingLot)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public Vehicle Parked()
@@ -152,6 +171,7 @@ namespace PremiumParking.ParkingSystemBack
             if (!vehicle.Paid)
             {
                 Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Važiuoja nesusimokėjus " + vehicle); });
+                vehicle.OnPay();
                 return;
             }
 
@@ -162,8 +182,8 @@ namespace PremiumParking.ParkingSystemBack
             }
 
             NotParkedVehicles.Remove(vehicle);
-            Vehicle v = MockedVehiclesInOut.FirstOrDefault(veh => veh == vehicle);
-            v.OnExit();
+            Vehicle v = MockedVehiclesInOut.FirstOrDefault(veh => veh == vehicle && veh.InParkingLot);
+            v?.OnExit();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using PremiumParking.ParkingSystemBack;
 using Console = System.Console;
@@ -22,6 +23,7 @@ namespace PremiumParking
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
             consoleTab.SizeMode = TabSizeMode.Fixed;
+            new Thread(() => new Form2(ref _console).ShowDialog()).Start();
         }
 
         private void LoadConsoleLog(object sender, EventArgs e)

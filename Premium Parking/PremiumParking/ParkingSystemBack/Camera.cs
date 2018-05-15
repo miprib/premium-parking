@@ -11,9 +11,11 @@ namespace PremiumParking.ParkingSystemBack
     {
         public Timer Timer { get; set; }
         public int Id { get; set; }
+        public Console Test;
 
         public Camera(Console forInvokeConsole, int id)
         {
+            Test = forInvokeConsole;
             Id = id;
             Timer = new Timer(o =>
             {
@@ -39,6 +41,27 @@ namespace PremiumParking.ParkingSystemBack
             timer2.Change(30000, 30000);
 
             Timer.Change(5000, 20000);
+        }
+
+        public void SimisIn()
+        {
+            if (Test.ParkingLot.IsFree())
+            {
+                Test.CarIn("AAA001", Id);
+            }
+            else
+            {
+                Test.NotFree();
+            }
+        }
+
+        public void SimisOut()
+        {
+            Vehicle vehicle = Test.NotParkedVehicles.FirstOrDefault(v => v.Resident);
+            if (vehicle != null)
+            {
+                Test.CarOut(vehicle, Id);
+            }
         }
 
         private readonly Random _random = new Random();
