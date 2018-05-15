@@ -53,7 +53,24 @@ namespace PremiumParking.ParkingSystemBack
 
         public void Parked()
         {
+            if(Vehicle != null) return;
             Vehicle = Console.Parked();
+            if (ParkingSensor.CheckIfGood())
+            {
+                Lamp.Status = false;
+            }
+            else
+            {
+                Lamp.Status = true;
+                Lamp.Green = false;
+            }
+        }
+
+        public void UnParked()
+        {
+            if(Vehicle == null) return;
+            Console.UnParked(Vehicle);
+            Vehicle = null;
         }
     }
 }
