@@ -56,5 +56,12 @@ namespace PremiumParking.ParkingSystemBack
             if(Vehicle != null) return;
             Vehicle = Console.Parked();
         }
+
+        public void UnParked()
+        {
+            if(Vehicle == null) return;
+            Console.UnParked(Vehicle);
+            Vehicle = null;
+        }
     }
 }

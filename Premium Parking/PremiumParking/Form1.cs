@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PremiumParking.ParkingSystemBack;
@@ -13,25 +13,30 @@ namespace PremiumParking
     public partial class Form1 : Form
     {
         private ParkingSystemBack.Console _console;
-        private BindingList<string> _infoBoxItemsList;
-        private BindingList<Vehicle> _vehicles;
-        private BindingList<Resident> _residents;
-        private BindingList<Vehicle> _vehiclesArvhive;
-        private System.Threading.Timer _timer;
 
         public Form1(ParkingSystemBack.Console console)
         {
             _console = console;
             InitializeComponent();
+            _console.ConsoleLogM(this);
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
             consoleTab.SizeMode = TabSizeMode.Fixed;
-            StartSystem();
         }
 
-        private void StartSystem()
+        private void LoadConsoleLog(object sender, EventArgs e)
         {
-            StartTimerForConsoleLog();
+            _console.ConsoleLog.ListChanged += new ListChangedEventHandler(this.SetBottomConsole);
+            infoBox.DataSource = _console.ConsoleLog;
+        }
+
+        private void SetBottomConsole(object sender, ListChangedEventArgs e)
+        {
+            Invoke((MethodInvoker) delegate
+            {
+                infoBox.TopIndex =
+                    Math.Max(infoBox.Items.Count - infoBox.ClientSize.Height / infoBox.ItemHeight + 1, 0);
+            });
         }
 
         private void LoadLights(object sender, EventArgs e)
@@ -46,43 +51,27 @@ namespace PremiumParking
 
         private void LoadArchivation(object sender, EventArgs e)
         {
-            _vehiclesArvhive = new BindingList<Vehicle>(_console.GetVehicleList());
-            archivationList.DataSource = _vehiclesArvhive;
+            var vehiclesArvhive = new BindingList<Vehicle>(_console.GetVehicleList());
+            archivationList.DataSource = vehiclesArvhive;
         }
 
         private void LoadResidents(object sender, EventArgs e)
         {
-            _residents = new BindingList<Resident>(_console.ResidentsList);
-            residentsTable.DataSource = _residents;
+            var residents = new BindingList<Resident>(_console.ResidentsList);
+            residentsTable.DataSource = residents;
         }
 
         private void LoadInOut(object sender, EventArgs e)
         {
-            _vehicles = new BindingList<Vehicle>(_console.MockedVehiclesInOut);
+            var vehicles = new BindingList<Vehicle>(_console.MockedVehiclesInOut);
             inout_jornal.AutoGenerateColumns = true;
-            inout_jornal.DataSource = _vehicles;
+            inout_jornal.DataSource = vehicles;
         }
 
         private void LoadGates(object sender, EventArgs e)
         {
             var bGates = new BindingList<Gate>(_console.Gates);
             gatesList.DataSource = bGates;
-        }
-
-        private void StartTimerForConsoleLog()
-        {
-            _infoBoxItemsList = new BindingList<string>(){"New list!"};
-            infoBox.DataSource = _infoBoxItemsList;
-            _timer = new System.Threading.Timer(o =>
-            {
-                Invoke((MethodInvoker)delegate
-                {
-                    _infoBoxItemsList.Add("New message!");
-                    infoBox.TopIndex =
-                        Math.Max(infoBox.Items.Count - infoBox.ClientSize.Height / infoBox.ItemHeight + 1, 0);
-                });
-            });
-            _timer.Change(5000, 5000);
         }
 
         private void menu_SelectedIndexChanged(object sender, EventArgs e)
@@ -148,7 +137,7 @@ namespace PremiumParking
         {
             var item = gatesList.SelectedItem as Gate;
             item?.Change();
-            console.Items.Add("Vardai " + _console.Gates.FirstOrDefault(g => g==item).Id + " " + (_console.Gates.FirstOrDefault(g => g == item).State ? "atidaromi" : "uždaromi"));
+            console.Items.Add("Vardai " + item.Id + " " + (item.State ? "atidaromi" : "uždaromi"));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -157,7 +146,7 @@ namespace PremiumParking
             if (t.Length > 1)
             {
                 BindingList<Vehicle> vehicles = new BindingList<Vehicle>();
-                foreach (var vehicle in _vehicles)
+                foreach (var vehicle in _console.MockedVehiclesInOut)
                 {
                     if (Regex.IsMatch(vehicle.LicensePlate, t))
                     {
@@ -169,7 +158,7 @@ namespace PremiumParking
             }
             else
             {
-                inout_jornal.DataSource = _vehicles;
+                inout_jornal.DataSource = _console.MockedVehiclesInOut;
             }
 
         }
@@ -205,7 +194,7 @@ namespace PremiumParking
             var phone = residentsTableSelectedRow.Cells[3].Value.ToString();
             var apartament = residentsTableSelectedRow.Cells[4].Value.ToString();
             Resident resident = new Resident(name,surname,license,phone,apartament);
-            _residents.Remove(resident);
+            residentsTable.Rows.Remove(residentsTableSelectedRow);
             _console.RemoveResident(resident);
         }
 
@@ -218,7 +207,7 @@ namespace PremiumParking
             var resident = archivationListSelectedRow.Cells[3].Value is bool b && b;
             var paid = archivationListSelectedRow.Cells[4].Value as bool? ?? false;
             Vehicle a = new Vehicle(name,enter,exit,resident,paid);
-            _vehiclesArvhive.Remove(a);
+            archivationList.Rows.Remove(archivationListSelectedRow);
             _console.ArchiveCar(a);
         }
 

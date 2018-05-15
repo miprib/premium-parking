@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PremiumParking.ParkingSystemBack
 {
@@ -14,6 +16,7 @@ namespace PremiumParking.ParkingSystemBack
         public List<Vehicle> NotParkedVehicles { get; set; }
         public List<Resident> ResidentsList { get; set; }
         public List<Vehicle> MockedVehiclesInOut { get; set; }
+        public BindingList<string> ConsoleLog { get; set; }
 
         public Console()
         {
@@ -23,6 +26,19 @@ namespace PremiumParking.ParkingSystemBack
             NotParkedVehicles = new List<Vehicle>();
             MockedVehiclesInOut = new List<Vehicle>();
             ParkingLot = ParkingLot.CreateInstace(5, 1, 1, 1, this);
+            ConsoleLog = new BindingList<string>();
+        }
+
+        public void ConsoleLogM(Form1 f)
+        {
+            System.Threading.Timer t = new System.Threading.Timer(o => 
+            {
+                f.Invoke((MethodInvoker)delegate
+                {
+                    this.ConsoleLog.Add("heyyyy");
+                });
+            });
+            t.Change(1000, 1000);
         }
 
         public void CarIn(string licensePlate)
@@ -83,6 +99,16 @@ namespace PremiumParking.ParkingSystemBack
         public void RemoveResident(Resident resident)
         {
             ResidentsList.Remove(resident);
+        }
+
+        public void UnParked(Vehicle vehicle)
+        {
+            NotParkedVehicles.Add(vehicle);
+        }
+
+        public void NotFree()
+        {
+            throw new NotImplementedException();
         }
     }
 }

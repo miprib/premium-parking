@@ -68,5 +68,18 @@ namespace PremiumParking.ParkingSystemBack
                 }
             }
         }
+
+        public bool IsFree()
+        {
+            foreach (var parkingSpace in ParkingSpaces)
+            {
+                if (parkingSpace.Vehicle == null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

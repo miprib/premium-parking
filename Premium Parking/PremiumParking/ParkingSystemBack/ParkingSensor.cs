@@ -15,7 +15,14 @@ namespace PremiumParking.ParkingSystemBack
         {
             Timer = new Timer(o =>
             {
-                parkingSpace.Parked();
+                if(parkingSpace.Vehicle == null)
+                {
+                    parkingSpace.Parked();
+                }
+                else
+                {
+                    parkingSpace.UnParked();
+                }
             });
             Timer.Change(5000, 5000);
         }

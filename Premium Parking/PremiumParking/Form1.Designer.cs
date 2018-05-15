@@ -480,6 +480,7 @@ namespace PremiumParking
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.VisibleChanged += new EventHandler(this.LoadConsoleLog);
             // 
             // infoBox
             // 

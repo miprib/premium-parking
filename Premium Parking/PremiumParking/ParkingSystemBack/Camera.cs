@@ -15,7 +15,14 @@ namespace PremiumParking.ParkingSystemBack
         {
             Timer = new Timer(o =>
             {
-                forInvokeConsole.CarIn(RandomString(6));
+                if (forInvokeConsole.ParkingLot.IsFree())
+                {
+                    forInvokeConsole.CarIn(RandomString(6));
+                }
+                else
+                {
+                    forInvokeConsole.NotFree();
+                }
             });
 
             Timer.Change(5000, 20000);
