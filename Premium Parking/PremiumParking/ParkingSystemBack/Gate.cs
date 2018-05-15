@@ -9,9 +9,11 @@ namespace PremiumParking.ParkingSystemBack
     {
         public int Id { get; set; }
         public bool State { get; set; }
+        public GatesSensor GatesSensor { get; set; }
 
         public Gate(int id)
         {
+            GatesSensor = new GatesSensor(this);
             Id = id;
             State = false;
         }
@@ -38,19 +40,13 @@ namespace PremiumParking.ParkingSystemBack
         {
             if (State == true) return true;
             State = true;
-            System.Threading.Thread.Sleep(5000);
-            if (new Random().Next(0, 100) >= 95) return true;
-            State = false;
-            return false;
-        }
-
-        public void TryClose()
-        {
-            while (new Random().Next(0, 100) < 50)
+            if (new Random().Next(0, 100) >= 90)
             {
-                State = true;
+                GatesSensor.State = true;
+                return true;
             }
             State = false;
+            return false;
         }
     }
 }

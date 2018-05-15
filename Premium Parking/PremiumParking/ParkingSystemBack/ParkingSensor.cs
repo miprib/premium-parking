@@ -9,27 +9,26 @@ namespace PremiumParking.ParkingSystemBack
 {
     public class ParkingSensor
     {
-        public Timer Timer { get; set; }
+        public ParkingSpace ParkingSpace { get; set; }
 
         public ParkingSensor(ParkingSpace parkingSpace)
         {
-            Timer = new Timer(o =>
-            {
-                if(parkingSpace.Vehicle == null)
-                {
-                    parkingSpace.Parked();
-                }
-                else
-                {
-                    parkingSpace.UnParked();
-                }
-            });
-            Timer.Change(50000, 50000);
+            ParkingSpace = parkingSpace;
+        }
+
+        public void Parked(string license)
+        {
+            ParkingSpace.Parked(license);
+        }
+
+        public void UnParked()
+        {
+            ParkingSpace.UnParked();
         }
 
         public bool CheckIfGood()
         {
-            return new Random().Next(0, 100) <= 80;
+            return new Random().Next(0,100) <= 80;
         }
     }
 }

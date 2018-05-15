@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using PremiumParking.ParkingSystemBack;
 using Console = System.Console;
@@ -22,11 +23,12 @@ namespace PremiumParking
             consoleTab.Appearance = TabAppearance.FlatButtons;
             consoleTab.ItemSize = new Size(0, 1);
             consoleTab.SizeMode = TabSizeMode.Fixed;
+            new Thread(() => new Form2(ref _console).ShowDialog()).Start();
         }
 
         private void LoadConsoleLog(object sender, EventArgs e)
         {
-            _console.ConsoleLog.ListChanged += new ListChangedEventHandler(this.SetBottomConsole);
+            _console.ConsoleLog.ListChanged += this.SetBottomConsole;
             infoBox.DataSource = _console.ConsoleLog;
         }
 
@@ -76,41 +78,30 @@ namespace PremiumParking
 
         private void menu_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            console.Items.Add(menu.SelectedItem.ToString());
-            int visibleItems = console.ClientSize.Height / console.ItemHeight;
-            console.TopIndex = Math.Max(console.Items.Count - visibleItems + 1, 0);
             int popupNumber = -1;
 
             switch (menu.SelectedIndex)
             {
                 case 0:
                     consoleTab.SelectedIndex = 1;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 case 1:
                     popupNumber = 1;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 case 2:
                     popupNumber = 2;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 case 3:
                     consoleTab.SelectedIndex = 0;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 case 4:
                     consoleTab.SelectedIndex = 5;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 case 5:
                     popupNumber = 3;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 case 6:
                     consoleTab.SelectedIndex = 7;
-                    Console.WriteLine(menu.SelectedItem);
                     break;
                 default:
                     consoleTab.SelectedIndex = 0;
@@ -124,7 +115,6 @@ namespace PremiumParking
             {
                 if (popupUi.ShowDialog() != DialogResult.OK) return;
                 consoleTab.SelectedIndex = popupUi.PopupReturn;
-                console.Items.Add(popupUi.PopupReturn);
             }
         }
 
@@ -220,7 +210,7 @@ namespace PremiumParking
         private void button5_Click(object sender, EventArgs e)
         {
             _console.ParkingLot.Brightness = (byte)trackBar1.Value;
-            console.Items.Add("Pakeista " + trackBar1.Value + "%");
+            _console.ConsoleLog.Add("Pakeista " + trackBar1.Value + "%");
         }
     }
 }

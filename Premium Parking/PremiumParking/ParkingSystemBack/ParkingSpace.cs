@@ -51,10 +51,10 @@ namespace PremiumParking.ParkingSystemBack
             }
         }
 
-        public void Parked()
+        public void Parked(string license)
         {
             if(Vehicle != null) return;
-            Vehicle = Console.Parked();
+            Vehicle = Console.Parked(license);
             if (ParkingSensor.CheckIfGood())
             {
                 Lamp.Status = false;

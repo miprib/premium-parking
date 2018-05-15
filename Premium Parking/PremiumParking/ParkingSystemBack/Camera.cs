@@ -9,36 +9,23 @@ namespace PremiumParking.ParkingSystemBack
 {
     public class Camera
     {
-        public Timer Timer { get; set; }
         public int Id { get; set; }
+        public Console Test;
 
-        public Camera(Console forInvokeConsole, int id)
+        public Camera(Console console, int id)
         {
+            Test = console;
             Id = id;
-            Timer = new Timer(o =>
-            {
-                if (forInvokeConsole.ParkingLot.IsFree())
-                {
-                    forInvokeConsole.CarIn(RandomString(6), Id);
-                }
-                else
-                {
-                    forInvokeConsole.NotFree();
-                }
-            });
+        }
 
-            Timer timer2 = new Timer(o =>
-            {
-                Vehicle vehicle = forInvokeConsole.NotParkedVehicles.FirstOrDefault();
-                if (vehicle != null)
-                {
-                    forInvokeConsole.CarOut(vehicle, Id);
-                }
-            });
+        public void In(string license)
+        {
+            Test.CarIn(license, Id);
+        }
 
-            timer2.Change(30000, 30000);
-
-            Timer.Change(5000, 20000);
+        public void Out(string license)
+        {
+            Test.CarOut(license, Id);
         }
 
         private readonly Random _random = new Random();
