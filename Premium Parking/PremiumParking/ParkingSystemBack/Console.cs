@@ -21,7 +21,7 @@ namespace PremiumParking.ParkingSystemBack
 
         public Console()
         {
-            Gates = new List<Gate>() { new Gate(444) };
+            Gates = new List<Gate>() { new Gate(444, this) };
             Camera = MakeCameras(Gates);
             ResidentsList = Resident.ResidentsFactory();
             NotParkedVehicles = new List<Vehicle>();
@@ -43,10 +43,11 @@ namespace PremiumParking.ParkingSystemBack
 
         public void CarIn(string licensePlate, int camId)
         {
-            Gate g = Gates.FirstOrDefault(gt => gt.Id == camId);
-            if (g == null)
+            Gate gate = Gates.FirstOrDefault(gt => gt.Id == camId);
+            if (gate == null)
             {
                 Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Kameros klaida"); });
+                return;
             }
             if(!ParkingLot.IsFree())
             {
@@ -60,20 +61,20 @@ namespace PremiumParking.ParkingSystemBack
                 return;
             }
 
-            if (g.OpenVehicle())
-            {
-                Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Mašina stovi po vartais!!!"); });
-                if(g.GatesSensor.GoOrNot()) return;
-            }
+            gate.OpenVehicle(licensePlate);
+        }
+
+        public void CarInGate(Gate gate)
+        {
             bool residentVehicle = false;
             foreach (var resident in ResidentsList)
             {
-                if (resident.LicensePlate == licensePlate)
+                if (resident.LicensePlate == gate.OpenGatesFor)
                 {
                     residentVehicle = true;
                 }
             }
-            Vehicle vehicle = new Vehicle(licensePlate, residentVehicle);
+            Vehicle vehicle = new Vehicle(gate.OpenGatesFor, residentVehicle);
             Task.Factory.StartNew(() =>
             {
                 System.Threading.Thread.Sleep(20000);
@@ -88,10 +89,11 @@ namespace PremiumParking.ParkingSystemBack
 
         public void CarOut(string licensePlate, int camId)
         {
-            Gate g = Gates.FirstOrDefault(gt => gt.Id == camId);
-            if (g == null)
+            Gate gate = Gates.FirstOrDefault(gt => gt.Id == camId);
+            if (gate == null)
             {
                 Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Kameros klaida"); });
+                return;
             }
 
             Vehicle vehicle = NotParkedVehicles.FirstOrDefault(veh => veh.LicensePlate == licensePlate);
@@ -99,10 +101,7 @@ namespace PremiumParking.ParkingSystemBack
             if (vehicle == null)
             {
                 Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Mašina sistemoje nerasta!!! " + licensePlate); });
-                if (g.OpenVehicle())
-                {
-                    g.GatesSensor.GoOrNot();
-                }
+                gate.OpenVehicle(licensePlate);
                 return;
             }
 
@@ -112,14 +111,15 @@ namespace PremiumParking.ParkingSystemBack
                 return;
             }
 
-            if (g.OpenVehicle())
-            {
-                Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Mašina stovi po vartais!!!"); });
-                if (g.GatesSensor.GoOrNot()) return;
-            }
+            gate.OpenVehicle(licensePlate);
+        }
+
+        public void CarOutGate(string licensePlate, Gate gate)
+        {
+            var vehicle = NotParkedVehicles.FirstOrDefault(v => v.LicensePlate == licensePlate);
+            if(vehicle == null) return;
             NotParkedVehicles.Remove(vehicle);
-            Vehicle v = MockedVehiclesInOut.First(veh => veh == vehicle && veh.InParkingLot);
-            v.OnExit();
+            MockedVehiclesInOut.First(veh => veh == vehicle && veh.InParkingLot).OnExit();
         }
 
         public bool CheckIfNotParked(Vehicle vehicle)
@@ -218,6 +218,11 @@ namespace PremiumParking.ParkingSystemBack
                     }
                 }
             }
+        }
+
+        public void UnderGates()
+        {
+            Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Mašina stovi po vartais!!!"); });
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PremiumParking.ParkingSystemBack
@@ -17,11 +18,23 @@ namespace PremiumParking.ParkingSystemBack
             State = false;
         }
 
-        public bool GoOrNot()
+        public void Drive()
+        {
+            if (Gate.State)
+            {
+                State = false;
+                Gate.Drive();
+            }
+        }
+
+        public void UnderGate()
+        {
+            State = true;
+        }
+
+        public void NotDrive()
         {
             State = false;
-            Gate.State = false;
-            return new Random().Next(0, 100) > 50;
         }
     }
 }

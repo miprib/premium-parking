@@ -10,11 +10,11 @@ namespace PremiumParking.Tests
         [TestMethod]
         public void MakeCamerasTest()
         {
+            Console console = new Console();
             List<Gate> gates = new List<Gate>()
             {
-                new Gate(5)
+                new Gate(5, console)
             };
-            Console console = new Console();
             List<Camera> cameras = console.MakeCameras(gates);
             Camera camera = new Camera(console, 5);
             Assert.IsTrue(cameras.Contains(camera));
