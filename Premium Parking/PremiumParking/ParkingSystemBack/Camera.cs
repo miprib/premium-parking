@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PremiumParking.ParkingSystemBack
 {
-    public class Camera
+    public class Camera : IEquatable<Camera>
     {
         public int Id { get; set; }
         public Console Test;
@@ -34,6 +34,29 @@ namespace PremiumParking.ParkingSystemBack
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        public bool Equals(Camera other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(Test, other.Test) && Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Camera) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Test != null ? Test.GetHashCode() : 0) * 397) ^ Id;
+            }
         }
     }
 }

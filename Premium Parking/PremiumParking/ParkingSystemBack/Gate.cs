@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PremiumParking.ParkingSystemBack
@@ -10,9 +11,12 @@ namespace PremiumParking.ParkingSystemBack
         public int Id { get; set; }
         public bool State { get; set; }
         public GatesSensor GatesSensor { get; set; }
+        public string OpenGatesFor { get; set; }
+        public Console Console { get; set; }
 
-        public Gate(int id)
+        public Gate(int id, Console console)
         {
+            Console = console;
             GatesSensor = new GatesSensor(this);
             Id = id;
             State = false;
@@ -36,17 +40,28 @@ namespace PremiumParking.ParkingSystemBack
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
-        public bool OpenVehicle()
+        public void OpenVehicle(string licensePlate)
         {
-            if (State == true) return true;
             State = true;
-            if (new Random().Next(0, 100) >= 90)
+            OpenGatesFor = licensePlate;
+            Task.Factory.StartNew(() =>
             {
-                GatesSensor.State = true;
-                return true;
-            }
+                Thread.Sleep(10000);
+                while (GatesSensor.State)
+                {
+                    Console.UnderGates();
+                    Thread.Sleep(10000);
+                }
+
+                State = false;
+            });
+        }
+
+        public void Drive()
+        {
             State = false;
-            return false;
+            Console.CarInGate(this);
+            OpenGatesFor = null;
         }
     }
 }

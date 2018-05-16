@@ -88,5 +88,15 @@ namespace PremiumParking
         {
             Console.Camera[0].Out("AAA003");
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            Console.Gates[0].GatesSensor.UnderGate();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Console.Gates[0].GatesSensor.Drive();
+        }
     }
 }
