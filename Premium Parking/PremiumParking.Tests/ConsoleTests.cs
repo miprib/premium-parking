@@ -25,6 +25,7 @@ namespace PremiumParking.Tests
         {
             Console console = new Console();
             console.CarIn("AAAA", 444);
+            console.Gates[0].GatesSensor.Drive();
             Vehicle vehicle = new Vehicle("AAAA", false);
             Assert.IsTrue(console.CheckIfNotParked(vehicle));
         }
@@ -34,6 +35,7 @@ namespace PremiumParking.Tests
         {
             Console console = new Console();
             console.CarIn("AAAA", 444);
+            console.CarInGate(console.Gates[0]);
             Assert.IsTrue(console.CheckBoxInParkingLot("AAAA"));
         }
 
@@ -49,6 +51,7 @@ namespace PremiumParking.Tests
         {
             Console console = new Console();
             console.CarIn("AAAA", 444);
+            console.CarInGate(console.Gates[0]);
             Assert.IsTrue(console.GetVehicleList().Contains(new Vehicle("AAAA", false)));
         }
     }

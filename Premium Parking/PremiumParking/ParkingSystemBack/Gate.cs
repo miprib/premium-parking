@@ -61,6 +61,7 @@ namespace PremiumParking.ParkingSystemBack
         {
             State = false;
             Console.CarInGate(this);
+            OpenGatesFor = null;
         }
     }
 }
