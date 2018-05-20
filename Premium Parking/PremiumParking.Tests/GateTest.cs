@@ -101,7 +101,7 @@ namespace PremiumParking.Tests
         {
             Console console = new Console();
             console.Gates[0].GatesSensor.UnderGate();
-            Assert.IsTrue(console.Gates[0].GatesSensor.State);
+            Assert.IsFalse(console.Gates[0].GatesSensor.State);
         }
 
         [TestMethod]

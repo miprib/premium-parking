@@ -155,6 +155,11 @@ namespace PremiumParking
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (_console.ResidentsList.Count + 1 > _console.ParkingLot.ParkingSpaces.Count * 0.2)
+            {
+                label7.Text = @"Per daug rezervuotų vietų";
+                return;
+            }
             if ((textBox2.Text == "") && (textBox3.Text == "") && (textBox4.Text == "") && (textBox5.Text == "") && (textBox6.Text == ""))
             {
                 label7.Text = @"Užpildykite visus laukus";

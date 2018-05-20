@@ -16,16 +16,16 @@ namespace PremiumParking.ParkingSystemBack
         public List<Gate> Gates { get; set; }
         public List<Vehicle> NotParkedVehicles { get; set; }
         public List<Resident> ResidentsList { get; set; }
-        public List<Vehicle> MockedVehiclesInOut { get; set; }
+        public BindingList<Vehicle> MockedVehiclesInOut { get; set; }
         public BindingList<string> ConsoleLog { get; set; }
 
         public Console()
         {
             Gates = new List<Gate>() { new Gate(444, this) };
             Camera = MakeCameras(Gates);
-            ResidentsList = Resident.ResidentsFactory();
+            ResidentsList = new List<Resident>();
             NotParkedVehicles = new List<Vehicle>();
-            MockedVehiclesInOut = new List<Vehicle>();
+            MockedVehiclesInOut = new BindingList<Vehicle>();
             ParkingLot = ParkingLot.CreateInstace(5, 1, 1, 1, this);
             ConsoleLog = new BindingList<string>();
         }
@@ -61,11 +61,16 @@ namespace PremiumParking.ParkingSystemBack
                 return;
             }
 
-            gate.OpenVehicle(licensePlate);
+            gate.OpenVehicle(licensePlate, true);
         }
 
         public void CarInGate(Gate gate)
         {
+            if (!gate.DriveIn)
+            {
+                CarOutGate(gate);
+                return;
+            }
             bool residentVehicle = false;
             foreach (var resident in ResidentsList)
             {
@@ -101,22 +106,28 @@ namespace PremiumParking.ParkingSystemBack
             if (vehicle == null)
             {
                 Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Mašina sistemoje nerasta!!! " + licensePlate); });
-                gate.OpenVehicle(licensePlate);
+                gate.OpenVehicle(licensePlate, false);
                 return;
             }
 
             if (!vehicle.Paid)
             {
-                Form.Invoke((MethodInvoker)delegate { ConsoleLog.Add("Važiuoja nesusimokėjus " + vehicle); });
-                return;
+                if(ResidentsList.FirstOrDefault(s => s.LicensePlate == vehicle.LicensePlate) == null)
+                {
+                    Form.Invoke((MethodInvoker) delegate { ConsoleLog.Add("Važiuoja nesusimokėjus " + vehicle); });
+                    return;
+                }
+
+                vehicle.Resident = true;
+                vehicle.Paid = true;
             }
 
-            gate.OpenVehicle(licensePlate);
+            gate.OpenVehicle(licensePlate, false);
         }
 
-        public void CarOutGate(string licensePlate, Gate gate)
+        public void CarOutGate(Gate gate)
         {
-            var vehicle = NotParkedVehicles.FirstOrDefault(v => v.LicensePlate == licensePlate);
+            var vehicle = NotParkedVehicles.FirstOrDefault(v => v.LicensePlate == gate.OpenGatesFor);
             if(vehicle == null) return;
             NotParkedVehicles.Remove(vehicle);
             MockedVehiclesInOut.First(veh => veh == vehicle && veh.InParkingLot).OnExit();
