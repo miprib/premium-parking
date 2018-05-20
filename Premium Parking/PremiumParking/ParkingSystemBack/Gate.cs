@@ -12,6 +12,7 @@ namespace PremiumParking.ParkingSystemBack
         public bool State { get; set; }
         public GatesSensor GatesSensor { get; set; }
         public string OpenGatesFor { get; set; }
+        public bool DriveIn { get; set; }
         public Console Console { get; set; }
 
         public Gate(int id, Console console)
@@ -40,9 +41,10 @@ namespace PremiumParking.ParkingSystemBack
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
-        public void OpenVehicle(string licensePlate)
+        public void OpenVehicle(string licensePlate, bool driveIn)
         {
             State = true;
+            DriveIn = driveIn;
             OpenGatesFor = licensePlate;
             Task.Factory.StartNew(() =>
             {

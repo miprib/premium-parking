@@ -20,18 +20,27 @@ namespace PremiumParking.ParkingSystemBack
 
         public void Drive()
         {
-            State = false;
-            Gate.Drive();
+            if(Gate.State)
+            {
+                State = false;
+                Gate.Drive();
+            }
         }
 
         public void UnderGate()
         {
-            State = true;
+            if(Gate.State)
+            {
+                State = true;
+            }
         }
 
         public void NotDrive()
         {
-            State = false;
+            if(Gate.State)
+            {
+                State = false;
+            }
         }
     }
 }
