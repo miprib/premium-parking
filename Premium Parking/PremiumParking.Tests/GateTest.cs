@@ -25,7 +25,7 @@ namespace PremiumParking.Tests
         public void StateOpenVehicle_GateTest()
         {
             Console console = new Console();
-            console.Gates[0].OpenVehicle("AAA");
+            console.Gates[0].OpenVehicle("AAA", true);
             Assert.IsTrue(console.Gates[0].State);
         }
 
@@ -41,7 +41,7 @@ namespace PremiumParking.Tests
         public void StateOpenVehicle_Drive_GateTest()
         {
             Console console = new Console();
-            console.Gates[0].OpenVehicle("AAA");
+            console.Gates[0].OpenVehicle("AAA", true);
             console.Gates[0].Drive();
             Assert.IsFalse(console.Gates[0].State);
         }
@@ -56,7 +56,7 @@ namespace PremiumParking.Tests
         public void OpenGatesForOpenVehicle_GateTest()
         {
             Console console = new Console();
-            console.Gates[0].OpenVehicle("AAA");
+            console.Gates[0].OpenVehicle("AAA", true);
             Assert.IsTrue(console.Gates[0].OpenGatesFor == "AAA");
         }
 
@@ -72,7 +72,7 @@ namespace PremiumParking.Tests
         public void OpenGatesForOnVehicle_Drive_GateTest()
         {
             Console console = new Console();
-            console.Gates[0].OpenVehicle("AAA");
+            console.Gates[0].OpenVehicle("AAA", true);
             console.Gates[0].Drive();
             Assert.IsTrue(console.Gates[0].OpenGatesFor == null);
         }

@@ -98,5 +98,10 @@ namespace PremiumParking
         {
             Console.Gates[0].GatesSensor.Drive();
         }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Console.Gates[0].GatesSensor.NotDrive();
+        }
     }
 }

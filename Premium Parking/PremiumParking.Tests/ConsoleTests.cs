@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PremiumParking.ParkingSystemBack;
 
@@ -11,7 +12,7 @@ namespace PremiumParking.Tests
         public void MakeCamerasTest()
         {
             Console console = new Console();
-            List<Gate> gates = new List<Gate>()
+            BindingList<Gate> gates = new BindingList<Gate>()
             {
                 new Gate(5, console)
             };
@@ -35,7 +36,7 @@ namespace PremiumParking.Tests
         {
             Console console = new Console();
             console.CarIn("AAAA", 444);
-            console.CarInGate(console.Gates[0]);
+            console.Gates[0].GatesSensor.Drive();
             Assert.IsTrue(console.CheckBoxInParkingLot("AAAA"));
         }
 
