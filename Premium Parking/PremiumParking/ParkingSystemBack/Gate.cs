@@ -45,7 +45,7 @@ namespace PremiumParking.ParkingSystemBack
         public void OpenVehicle(string licensePlate, bool driveIn)
         {
             State = true;
-            Console.Form.Invoke((MethodInvoker) delegate { OnPropertyChanged("State"); });
+            Console.Form?.Invoke((MethodInvoker) delegate { OnPropertyChanged("State"); });
             DriveIn = driveIn;
             OpenGatesFor = licensePlate;
             Task.Factory.StartNew(() =>
