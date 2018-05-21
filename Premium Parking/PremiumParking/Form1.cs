@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PremiumParking.ParkingSystemBack;
 using Console = System.Console;
@@ -66,14 +67,18 @@ namespace PremiumParking
         private void LoadInOut(object sender, EventArgs e)
         {
             var vehicles = new BindingList<Vehicle>(_console.MockedVehiclesInOut);
+            _console.MockedVehiclesInOut.ListChanged += LoadInOut;
             inout_jornal.AutoGenerateColumns = true;
-            inout_jornal.DataSource = vehicles;
+            Task.Factory.StartNew(() =>
+            {
+                Thread.Sleep(100);
+                this.Invoke((MethodInvoker) delegate { inout_jornal.DataSource = vehicles; });
+            });
         }
 
         private void LoadGates(object sender, EventArgs e)
         {
-            var bGates = new BindingList<Gate>(_console.Gates);
-            gatesList.DataSource = bGates;
+            gatesList.DataSource = _console.Gates;
         }
 
         private void menu_SelectedIndexChanged(object sender, EventArgs e)

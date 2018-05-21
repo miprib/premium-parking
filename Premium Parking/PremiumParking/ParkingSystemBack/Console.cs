@@ -13,24 +13,24 @@ namespace PremiumParking.ParkingSystemBack
         public Form1 Form { get; set; }
         public ParkingLot ParkingLot { get; set; }
         public List<Camera> Camera { get; set; }
-        public List<Gate> Gates { get; set; }
-        public List<Vehicle> NotParkedVehicles { get; set; }
+        public BindingList<Gate> Gates { get; set; }
+        public BindingList<Vehicle> NotParkedVehicles { get; set; }
         public List<Resident> ResidentsList { get; set; }
         public BindingList<Vehicle> MockedVehiclesInOut { get; set; }
         public BindingList<string> ConsoleLog { get; set; }
 
         public Console()
         {
-            Gates = new List<Gate>() { new Gate(444, this) };
+            Gates = new BindingList<Gate>() { new Gate(444, this) };
             Camera = MakeCameras(Gates);
             ResidentsList = new List<Resident>();
-            NotParkedVehicles = new List<Vehicle>();
+            NotParkedVehicles = new BindingList<Vehicle>();
             MockedVehiclesInOut = new BindingList<Vehicle>();
             ParkingLot = ParkingLot.CreateInstace(5, 1, 1, 1, this);
             ConsoleLog = new BindingList<string>();
         }
 
-        public List<Camera> MakeCameras(List<Gate> gates)
+        public List<Camera> MakeCameras(BindingList<Gate> gates)
         {
             var a = new List<Camera>();
             foreach (var gate in gates)
@@ -162,9 +162,9 @@ namespace PremiumParking.ParkingSystemBack
             return vehicle;
         }
 
-        public List<Vehicle> GetVehicleList()
+        public BindingList<Vehicle> GetVehicleList()
         {
-            List<Vehicle> vehicles = new List<Vehicle>(NotParkedVehicles);
+            BindingList<Vehicle> vehicles = new BindingList<Vehicle>(NotParkedVehicles);
             foreach (var parkingLotParkingSpace in ParkingLot.ParkingSpaces)
             {
                 if (parkingLotParkingSpace.Vehicle != null)
