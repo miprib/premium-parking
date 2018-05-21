@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PremiumParking.ParkingSystemBack
 {
@@ -44,6 +45,7 @@ namespace PremiumParking.ParkingSystemBack
         public void OpenVehicle(string licensePlate, bool driveIn)
         {
             State = true;
+            Console.Form.Invoke((MethodInvoker) delegate { OnPropertyChanged("State"); });
             DriveIn = driveIn;
             OpenGatesFor = licensePlate;
             Task.Factory.StartNew(() =>
@@ -56,6 +58,8 @@ namespace PremiumParking.ParkingSystemBack
                 }
 
                 State = false;
+                OpenGatesFor = null;
+                Console.Form.Invoke((MethodInvoker)delegate { OnPropertyChanged("State"); });
             });
         }
 

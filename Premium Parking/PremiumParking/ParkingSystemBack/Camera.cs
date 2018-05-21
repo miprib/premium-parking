@@ -28,14 +28,6 @@ namespace PremiumParking.ParkingSystemBack
             Test.CarOut(license, Id);
         }
 
-        private readonly Random _random = new Random();
-        private string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[_random.Next(s.Length)]).ToArray());
-        }
-
         public bool Equals(Camera other)
         {
             if (ReferenceEquals(null, other)) return false;
