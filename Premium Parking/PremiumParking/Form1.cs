@@ -60,7 +60,7 @@ namespace PremiumParking
 
         private void LoadResidents(object sender, EventArgs e)
         {
-            var residents = new BindingList<Resident>(_console.ResidentsList);
+            var residents = new BindingList<Resident>(_console.Reservations);
             residentsTable.DataSource = residents;
         }
 
@@ -160,7 +160,7 @@ namespace PremiumParking
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (_console.ResidentsList.Count + 1 > _console.ParkingLot.ParkingSpaces.Count * 0.2)
+            if (_console.ResidentsList.Count + 1 <= _console.ParkingLot.ParkingSpaces.Count * 0.2)
             {
                 label7.Text = @"Per daug rezervuotų vietų";
                 return;
@@ -171,13 +171,19 @@ namespace PremiumParking
                 return;
             }
             Resident resident = new Resident(textBox2.Text, textBox3.Text,textBox4.Text, textBox5.Text, textBox6.Text);
-            if (_console.ResidentsList.Contains(resident))
+            if (_console.Reservations.Contains(resident))
             {
-                label7.Text = @"Toks gyventojas jau egzistuoja";
+                label7.Text = @"Tokiam automobiliui vieta užrezervuota";
+                return;
+            }
+
+            if (!_console.ResidentsList.Contains(resident))
+            {
+                label7.Text = @"Tokio gyventojo gyventojų sistemoje nėra";
                 return;
             }
             label7.Text = @"Išsaugota";
-            _console.ResidentsList.Add(resident);
+            _console.Reservations.Add(resident);
             textBox2.Text = String.Empty;
             textBox3.Text = String.Empty;
             textBox4.Text = String.Empty;

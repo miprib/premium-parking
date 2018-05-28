@@ -16,6 +16,7 @@ namespace PremiumParking.ParkingSystemBack
         public BindingList<Gate> Gates { get; set; }
         public BindingList<Vehicle> NotParkedVehicles { get; set; }
         public List<Resident> ResidentsList { get; set; }
+        public List<Resident> Reservations { get; set; }
         public BindingList<Vehicle> MockedVehiclesInOut { get; set; }
         public BindingList<string> ConsoleLog { get; set; }
 
@@ -23,9 +24,10 @@ namespace PremiumParking.ParkingSystemBack
         {
             Gates = new BindingList<Gate>() { new Gate(444, this) };
             Camera = MakeCameras(Gates);
-            ResidentsList = new List<Resident>();
+            ResidentsList = new List<Resident>(){ new Resident("Simis", "Simauskas", "AAA001", "888888888", "1") };
             NotParkedVehicles = new BindingList<Vehicle>();
             MockedVehiclesInOut = new BindingList<Vehicle>();
+            Reservations = new List<Resident>();
             ParkingLot = ParkingLot.CreateInstace(5, 1, 1, 1, this);
             ConsoleLog = new BindingList<string>();
         }
